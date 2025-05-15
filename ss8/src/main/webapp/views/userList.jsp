@@ -18,15 +18,13 @@
 <h2>Danh sách người dùng</h2>
 <table>
     <tr>
-        <th>ID</th>
         <th>Tên người dùng</th>
         <th>Email</th>
         <th>Số điện thoại</th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
-            <td>${user.id}</td>
-            <td>${user.username}</td>
+            <td>${user.name}</td>
             <td>${user.email}</td>
             <td>${user.phone}</td>
         </tr>
