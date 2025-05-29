@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách sản phẩm</title>
+</head>
+<body>
+
+<h2>Danh sách sản phẩm</h2>
+
+<form method="post" action="/search">
+    <input type="text" name="nameSearch" placeholder="Nhập tên sản phẩm">
+    <button type="submit">Tìm kiếm</button>
+</form>
+
+<p th:if="${message}" th:text="${message}" style="color:red;"></p>
+
+<!-- Bảng duy nhất -->
+<table border="1" th:if="${products}">
+    <tr>
+        <th>Mã</th>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Hành động</th> <!-- Thêm cột mới -->
+    </tr>
+    <tr th:each="p : ${products}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.price}"></td>
+        <td>
+            <a th:href="@{'/listProduct/' + ${p.id}}">Xem chi tiết</a>
+        </td>
+    </tr>
+</table>
+
+
+
+</body>
+</html>

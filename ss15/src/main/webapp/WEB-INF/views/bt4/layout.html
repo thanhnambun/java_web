@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="this :: title">Trang mặc định</title>
+</head>
+<body>
+
+<!-- Header Fragment -->
+<div th:fragment="header">
+    <header>
+        <h1>Ứng dụng Quản lý Người dùng22</h1>
+        <hr>
+    </header>
+</div>
+
+<!-- Footer Fragment -->
+<div th:fragment="footer">
+    <hr>
+    <footer>
+        <p>&copy; 2025 PTIT - Spring Boot Project</p>
+    </footer>
+</div>
+
+</body>
+</html>

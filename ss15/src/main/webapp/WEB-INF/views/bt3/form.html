@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form Đăng ký</title>
+</head>
+<body>
+<h2>Đăng ký người dùng</h2>
+<form th:action="@{/bt3/form}" th:object="${user}" method="post">
+    Tên: <input type="text" th:field="*{name}"/><br/>
+    Email: <input type="email" th:field="*{email}"/><br/>
+    Mật khẩu: <input type="password" th:field="*{password}"/><br/>
+
+    <div th:if="${#fields.hasErrors('*')}">
+        <p style="color:red" th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+    </div>
+
+    <button type="submit">Đăng ký</button>
+</form>
+</body>
+</html>

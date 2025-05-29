@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form th:action="@{/resumes/add}" method="post" th:object="${resume}">
+    <label>Họ tên:</label>
+    <input type="text" th:field="*{fullName}"/>
+    <p th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></p>
+
+    <label>Email:</label>
+    <input type="email" th:field="*{email}"/>
+    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
+    <label>SĐT:</label>
+    <input type="text" th:field="*{phoneNumber}"/>
+    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+
+    <label>Học vấn:</label>
+    <input type="text" th:field="*{education}"/>
+
+    <label>Kinh nghiệm:</label>
+    <textarea th:field="*{experience}"></textarea>
+
+    <label>Kỹ năng:</label>
+    <textarea th:field="*{skills}"></textarea>
+
+    <button type="submit">Lưu</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>SĐT</th>
+        <th>Hành động</th>
+    </tr>
+    <tr th:each="cv : ${resumes}">
+        <td th:text="${cv.fullName}"></td>
+        <td th:text="${cv.email}"></td>
+        <td th:text="${cv.phoneNumber}"></td>
+        <td>
+            <a th:href="@{'/resumes/delete/' + ${cv.id}}">Xóa</a>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/resumes/add}">Thêm CV</a>
+
+</body>
+</html>
