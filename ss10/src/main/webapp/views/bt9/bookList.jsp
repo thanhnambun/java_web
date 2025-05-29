@@ -10,6 +10,7 @@
     <strong>Tiêu đề:</strong> ${book.title}<br>
     <strong>Tác giả:</strong> ${book.author}<br>
     <strong>Mô tả:</strong> ${book.description}
+    <strong>ảnh :</strong> <img src="${fileUrl}">
   </div>
 </c:forEach>
 
