@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chi tiết vé</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Chi tiết vé</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><b>Mã vé:</b> <span th:text="${ticket.id}"></span></li>
+        <li class="list-group-item"><b>Chuyến xe:</b> <span th:text="${ticket.tripBusId}"></span></li>
+        <li class="list-group-item"><b>Ngày đi:</b> <span th:text="${ticket.departureDate}"></span></li>
+        <li class="list-group-item"><b>Ghế:</b> <span th:text="${ticket.listSeat}"></span></li>
+        <li class="list-group-item"><b>Tổng tiền:</b> <span th:text="${#numbers.formatDecimal(ticket.totalMoney, 1, 'COMMA', 2, 'POINT')}"></span></li>
+    </ul>
+    <a th:href="@{/ticket/my}" class="btn btn-secondary mt-3">Quay lại</a>
+</div>
+</body>
+</html>

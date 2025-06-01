@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm/Sửa xe</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 th:text="${bus.id == null ? 'Thêm xe mới' : 'Chỉnh sửa xe'}"></h2>
+    <form th:action="@{${bus.id == null} ? '/admin/bus/add' : '/admin/bus/edit/' + ${bus.id}}" th:object="${bus}" enctype="multipart/form-data" method="post" >
+        <div class="mb-3">
+            <label>Biển số</label>
+            <input type="text" class="form-control" th:field="*{licensePlate}" required>
+        </div>
+        <div class="mb-3">
+            <label>Loại xe</label>
+            <select class="form-select" th:field="*{busType}">
+                <option value="NORMAL">NORMAL</option>
+                <option value="VIP">VIP</option>
+                <option value="LUXURY">LUXURY</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label>Số hàng ghế</label>
+            <input type="number" class="form-control" th:field="*{rowSeat}" min="1" required>
+        </div>
+        <div class="mb-3">
+            <label>Số cột ghế</label>
+            <input type="number" class="form-control" th:field="*{colSeat}" min="1" required>
+        </div>
+        <div class="mb-3">
+            <label>Hình ảnh</label>
+            <input type="file" class="form-control" name="imageFile" accept="image/*">
+            <div th:if="${bus.image}">
+                <img th:src="${bus.image}" width="120" class="mt-2"/>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Lưu</button>
+        <a th:href="@{/admin/bus}" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Trang quản trị</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Chào mừng ADMIN!</h2>
+    <div class="list-group mt-4">
+        <a th:href="@{/admin/bus}" class="list-group-item list-group-item-action">Quản lý xe bus</a>
+        <a th:href="@{/admin/bustrip}" class="list-group-item list-group-item-action">Quản lý chuyến xe</a>
+        <!--        <a th:href="@{/admin/ticket}" class="list-group-item list-group-item-action">Quản lý vé</a>-->
+    </div>
+    <a th:href="@{/logout}" class="btn btn-outline-danger mt-4">Đăng xuất</a>
+</div>
+</body>
+</html>

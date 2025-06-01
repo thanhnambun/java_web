@@ -8,4 +8,6 @@ public interface ResumeService {
     void addResume(Resume resume);
     List<Resume> getAllResumes();
     void deleteResume(Long id);
+    void updateResume(Resume resume);
+    Resume findById(Long id);
 }

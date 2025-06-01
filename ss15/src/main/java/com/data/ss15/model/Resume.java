@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 public class Resume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank(message = "Họ tên không được để trống")
     private String fullName;

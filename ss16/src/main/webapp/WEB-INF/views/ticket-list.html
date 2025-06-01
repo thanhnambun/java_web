@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vé của tôi</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Danh sách vé đã đặt</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Mã vé</th>
+            <th>Chuyến xe</th>
+            <th>Ngày đi</th>
+            <th>Ghế</th>
+            <th>Tổng tiền</th>
+            <th>Chi tiết</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${tickets}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.tripBusId}"></td>
+            <td th:text="${t.departureDate}"></td>
+            <td th:text="${t.listSeat}"></td>
+            <td th:text="${#numbers.formatDecimal(t.totalMoney, 1, 'COMMA', 2, 'POINT')}"></td>
+            <td>
+                <a th:href="@{|/ticket/detail/${t.id}|}" class="btn btn-info btn-sm">Xem</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin}" class="btn btn-secondary">Quay lại</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý xe</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Danh sách xe</h2>
+    <a class="btn btn-success mb-2" th:href="@{/admin/bus/add}">Thêm xe mới</a>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Biển số</th>
+            <th>Loại xe</th>
+            <th>Số hàng</th>
+            <th>Số cột</th>
+            <th>Tổng ghế</th>
+            <th>Hình ảnh</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bus : ${buses}">
+            <td th:text="${bus.licensePlate}"></td>
+            <td th:text="${bus.busType}"></td>
+            <td th:text="${bus.rowSeat}"></td>
+            <td th:text="${bus.colSeat}"></td>
+            <td th:text="${bus.totalSeat}"></td>
+            <td>
+                <img th:src="${bus.image}" width="60" alt="Bus image"/>
+            </td>
+            <td>
+                <a th:href="@{|/admin/bus/edit/${bus.id}|}" class="btn btn-primary btn-sm">Sửa</a>
+                <a th:href="@{|/admin/bus/delete/${bus.id}|}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn?')">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+        <a th:href="@{/admin}" class="btn btn-secondary">Quay lại</a>
+    </table>
+</div>
+</body>
+</html>

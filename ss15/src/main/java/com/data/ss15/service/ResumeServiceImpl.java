@@ -24,4 +24,14 @@ public class ResumeServiceImpl implements ResumeService {
     public void deleteResume(Long id) {
         resumeDAO.deleteResume(id);
     }
+
+    @Override
+    public void updateResume(Resume resume) {
+        resumeDAO.updateResume(resume);
+    }
+
+    @Override
+    public Resume findById(Long id) {
+        return resumeDAO.findById(id);
+    }
 }

@@ -70,4 +70,52 @@ public class ResumeRepositoryImp  implements ResumeRepository {
             ConnectionDB.closeConnection(conn, callSt);
         }
     }
+
+    @Override
+    public Resume findById(Long id) {
+        Connection conn = ConnectionDB.openConnection();
+        CallableStatement callSt = null;
+        Resume r = null;
+        ResultSet rs = null;
+        try {
+            callSt = conn.prepareCall("{call find_by_id(?)}");
+            callSt.setLong(1, id);
+            rs = callSt.executeQuery();
+
+            if (rs.next()) {
+                r = new Resume();
+                r.setId(rs.getLong("id"));
+                r.setFullName(rs.getString("full_name"));
+                r.setEmail(rs.getString("email"));
+                r.setPhoneNumber(rs.getString("phone_number"));
+                r.setEducation(rs.getString("education"));
+                r.setExperience(rs.getString("experience"));
+                r.setSkills(rs.getString("skills"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return r;
+    }
+
+    @Override
+    public void updateResume(Resume resume) {
+        Connection conn = ConnectionDB.openConnection();
+        CallableStatement callSt = null;
+        try {
+            callSt = conn.prepareCall("{call edit_resume(?,?, ?, ?, ?, ?, ?)}");
+            callSt.setLong(1, resume.getId());
+            callSt.setString(2, resume.getFullName());
+            callSt.setString(3, resume.getEmail());
+            callSt.setString(4, resume.getPhoneNumber());
+            callSt.setString(5, resume.getEducation());
+            callSt.setString(6, resume.getExperience());
+            callSt.setString(7, resume.getSkills());
+            callSt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDB.closeConnection(conn, callSt);
+        }
+    }
 }

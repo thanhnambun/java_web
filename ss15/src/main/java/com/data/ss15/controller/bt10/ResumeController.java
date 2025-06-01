@@ -42,4 +42,21 @@ public class ResumeController {
         resumeService.deleteResume(id);
         return "redirect:/resumes";
     }
+    @GetMapping("/edit/{id}")
+    public String editResumeForm(@PathVariable Long id,
+                              Model model) {
+        Resume resume1 = resumeService.findById(id);
+        model.addAttribute("resume", resume1);
+        return "bt10/editForm";
+    }
+    @PostMapping("/edit/{id}")
+    public String editResume (@ModelAttribute("resume") @Valid Resume resume,
+                              BindingResult result)
+        {
+        if (result.hasErrors()) {
+            return "/bt10/editForm";
+        }
+        resumeService.updateResume(resume);
+        return "redirect:/resumes";
+        }
 }

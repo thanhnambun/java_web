@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý chuyến xe</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Danh sách chuyến xe</h2>
+    <a class="btn btn-success mb-2" th:href="@{/admin/bustrip/add}">Thêm chuyến xe mới</a>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Điểm đi</th>
+            <th>Điểm đến</th>
+            <th>Khởi hành</th>
+            <th>Đến nơi</th>
+            <th>Xe</th>
+            <th>Số ghế trống</th>
+            <th>Hình ảnh</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="trip : ${busTrips}">
+            <td th:text="${trip.departurePoint}"></td>
+            <td th:text="${trip.destination}"></td>
+            <td th:text="${#temporals.format(trip.departureTime, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${#temporals.format(trip.arrivalTime, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${trip.busId}"></td>
+            <td th:text="${trip.seatsAvailable}"></td>
+            <td>
+                <img th:src="${trip.image}" width="60" alt="Bus image"/>
+            </td>
+
+
+            <td>
+                <a th:href="@{|/admin/bustrip/edit/${trip.id}|}" class="btn btn-primary btn-sm">Sửa</a>
+                <a th:href="@{|/admin/bustrip/delete/${trip.id}|}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chắn?')">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin}" class="btn btn-secondary">Quay lại</a>
+</div>
+</body>
+</html>

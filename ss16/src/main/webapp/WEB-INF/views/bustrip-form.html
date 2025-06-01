@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Thêm/Sửa chuyến xe</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 th:text="${bustrip.id == null ? 'Thêm chuyến xe mới' : 'Chỉnh sửa chuyến xe'}"></h2>
+  <form th:action="@{${bustrip.id == null} ? '/admin/bustrip/add' : '/admin/bustrip/edit/' + ${bustrip.id}}"
+        th:object="${bustrip}" enctype="multipart/form-data" method="post">
+
+    <div class="mb-3">
+      <label>Điểm đi</label>
+      <input type="text" class="form-control" th:field="*{departurePoint}" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('departurePoint')}" th:errors="*{departurePoint}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label>Điểm đến</label>
+      <input type="text" class="form-control" th:field="*{destination}" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label>Thời gian khởi hành</label>
+      <input type="datetime-local" class="form-control" th:field="*{departureTime}" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label>Thời gian đến</label>
+      <input type="datetime-local" class="form-control" th:field="*{arrivalTime}" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label>Xe</label>
+      <select class="form-select" th:field="*{busId}">
+        <option th:each="bus : ${buses}" th:value="${bus.id}" th:text="${bus.licensePlate}"></option>
+      </select>
+      <div class="text-danger" th:if="${#fields.hasErrors('busId')}" th:errors="*{busId}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label>Số ghế trống</label>
+      <input type="number" class="form-control" th:field="*{seatsAvailable}" min="1" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('seatsAvailable')}" th:errors="*{seatsAvailable}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label>Hình ảnh</label>
+      <input type="file" class="form-control" name="imageFile" accept="image/*">
+      <div th:if="${bustrip.image}">
+        <img th:src="${bustrip.image}" width="120" class="mt-2"/>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a th:href="@{/admin/bustrip}" class="btn btn-secondary">Quay lại</a>
+  </form>
+
+</div>
+</body>
+</html>

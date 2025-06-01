@@ -1,4 +1,4 @@
-package com.data.ss15.config;
+package com.data.ss16.config;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.data.ss15")
+@ComponentScan(basePackages = "com.data.ss16")
 public class AppConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -43,6 +43,7 @@ public class AppConfig implements WebMvcConfigurer {
                 "secure", true                        // Bật chế độ truyền tải HTTPS (nên luôn để true)
         ));
     }
+
     @Bean
     public MultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();

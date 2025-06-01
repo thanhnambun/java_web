@@ -18,6 +18,7 @@
         <td th:text="${cv.phoneNumber}"></td>
         <td>
             <a th:href="@{'/resumes/delete/' + ${cv.id}}">Xóa</a>
+            <a th:href="@{'/resumes/edit/' + ${cv.id}}">Sửa</a>
         </td>
     </tr>
 </table>

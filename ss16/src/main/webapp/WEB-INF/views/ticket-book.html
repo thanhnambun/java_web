@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Đặt vé</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+  <h2>Đặt vé chuyến xe</h2>
+  <div class="mb-3">
+    <b>Chuyến:</b> <span th:text="${trip.departurePoint}"></span> - <span th:text="${trip.destination}"></span>
+    <br>
+    <b>Khởi hành:</b> <span th:text="${#temporals.format(trip.departureTime, 'dd/MM/yyyy HH:mm')}"></span>
+    <br>
+    <b>Số ghế trống:</b> <span th:text="${trip.seatsAvailable}"></span>
+  </div>
+  <form th:action="@{'/ticket/book/' + ${trip.id}}" th:object="${ticket}" method="post">
+    <div class="mb-3">
+      <label>Ngày đi</label>
+      <input type="date" class="form-control" th:field="*{departureDate}" required>
+    </div>
+    <div class="mb-3">
+      <label>Chọn ghế (nhập tên ghế, cách nhau bởi dấu phẩy, ví dụ: A1,A2)</label>
+      <input type="text" class="form-control" th:field="*{listSeat}" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('listSeat')}" th:errors="*{listSeat}"></div>
+    </div>
+    <div class="mb-3">
+      <label>Tổng tiền</label>
+      <input type="number" class="form-control" th:field="*{totalMoney}" required>
+    </div>
+    <button type="submit" class="btn btn-success">Đặt vé</button>
+    <a th:href="@{/home}" class="btn btn-secondary">Quay lại</a>
+  </form>
+</div>
+</body>
+</html>
