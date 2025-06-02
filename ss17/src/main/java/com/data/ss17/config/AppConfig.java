@@ -1,6 +1,7 @@
-package com.data.ss16.config;
+package com.data.ss17.config;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
@@ -21,11 +22,12 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import javax.persistence.EntityManager;
 
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.data.ss16")
+@ComponentScan(basePackages = "com.data.ss17")
 public class AppConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -114,12 +116,23 @@ public class AppConfig implements WebMvcConfigurer {
         viewResolver.setOrder(1);
         return viewResolver;
     }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/static/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+    // quản lý các session và kết nối CSDL
+    @Bean
+    public SessionFactory sessionFactory() {
+        return new org.hibernate.cfg.Configuration()
+                .configure("hibernate-config.xml")
+                .buildSessionFactory();
+    }
+    // quản lý các entity
+    @Bean
+    public EntityManager entityManager() {
+        return sessionFactory().createEntityManager();
     }
 }

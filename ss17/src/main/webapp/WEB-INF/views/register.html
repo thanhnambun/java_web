@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đăng ký</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Đăng ký tài khoản</h2>
+    <form th:action="@{/register}" th:object="${customer}" method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">Tên đăng nhập</label>
+            <input type="text" th:field="*{username}" class="form-control" id="username">
+            <div th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input type="password" th:field="*{password}" class="form-control" id="password">
+            <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" th:field="*{email}" class="form-control" id="email">
+            <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Số điện thoại</label>
+            <input type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber">
+            <div th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger" th:errors="*{phoneNumber}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+    </form>
+
+    <div th:if="${successMessage}" class="alert alert-success mt-3" th:text="${successMessage}"></div>
+</div>
+</body>
+</html>

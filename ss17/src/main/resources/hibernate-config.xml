@@ -1,0 +1,18 @@
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/session17_hibernate?createDatabaseIfNotExist=true</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">265205</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="show_sql">true</property>
+        <!--  update: tự gen ra bảng, cột trong db nêếu chưa có  -->
+        <!--  update: nêếu có rồi bỏ qua  -->
+        <property name="hbm2ddl.auto">update</property>
+
+<!--        khai báo entity-->
+        <mapping class="com.data.ss17.model.Customer"></mapping>
+        <mapping class="com.data.ss17.model.Product"></mapping>
+        <mapping class="com.data.ss17.model.ProductCart"></mapping>
+    </session-factory>
+</hibernate-configuration>
