@@ -1,0 +1,13 @@
+<form th:action="@{/login}" th:object="${loginForm}" method="post">
+    <label>Username:</label>
+    <input type="text" th:field="*{username}" />
+    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+
+    <label>Password:</label>
+    <input type="password" th:field="*{password}" />
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+    <div th:if="${error}" th:text="${error}" style="color: red;"></div>
+
+    <button type="submit">Đăng nhập</button>
+</form>

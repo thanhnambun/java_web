@@ -1,4 +1,4 @@
-package com.data.ss17.repository;
+package com.data.ss18.repository;
 
 import com.data.ss17.model.Customer;
 
@@ -10,6 +10,4 @@ public interface CustomerRepository {
     boolean save(Customer customer);
     void update(Customer customer);
     Customer findById(Long id);
-    Long getTotalCustomers(String search);
-    Long getTotalCustomers();
 }
