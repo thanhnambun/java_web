@@ -1,7 +1,6 @@
-package com.data.ss18_2.repository;
+package com.data.sss18_3.repository;
 
 import com.data.ss18_2.model.User;
-import com.data.ss18_2.service.CloudinaryService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

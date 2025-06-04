@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách người dùng</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #cccccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    a.button {
+      padding: 6px 12px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    a.button:hover {
+      background-color: #0056b3;
+    }
+
+    .add-btn {
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+<h1>Danh sách người dùng</h1>
+
+<a th:href="@{/add}" class="button add-btn">Thêm người dùng</a>
+<form th:action="@{/listUser}" method="get">
+  <input type="text" name="search" placeholder="Tìm theo tên hoặc email" th:value="${search}"/>
+  <button type="submit">Tìm kiếm</button>
+</form>
+
+<table>
+  <thead>
+  <tr>
+    <th>STT</th>
+    <th>Ảnh đại diện</th>
+    <th>Họ và tên</th>
+    <th>Email</th>
+    <th>Số điện thoại</th>
+    <th>Địa chỉ</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user, iterStat : ${users}">
+    <td th:text="${iterStat.index + 1}">1</td>
+    <td>
+      <img th:if="${user.img != null}" th:src="${user.img}" alt="Ảnh đại diện"/>
+      <span th:if="${user.img == null}">Không có ảnh</span>
+    </td>
+    <td th:text="${user.firstName + ' ' + user.lastName}">Nguyễn Văn A</td>
+    <td th:text="${user.email}">email@example.com</td>
+    <td th:text="${user.phone}">0123456789</td>
+    <td th:text="${user.address}">Hà Nội</td>
+    <td>
+      <a th:href="@{/edit(id=${user.id})}" class="button">Sửa</a>
+      <a th:href="@{/delete(id=${user.id})}" class="button" style="background-color:red">Xóa</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

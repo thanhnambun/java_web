@@ -7,7 +7,7 @@
 <body>
 <h1><%= "Hello World!" %>
 </h1>
-<a href="listUser">list</a>
 <br/>
+<a href="listUser">list</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.data.ss18_2.controller;
+package com.data.sss18_3.controller;
 
 import com.data.ss18_2.model.User;
 import com.data.ss18_2.repository.UserRepository;
@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController {
