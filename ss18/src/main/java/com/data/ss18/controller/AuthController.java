@@ -1,8 +1,8 @@
-package com.data.ss17.controlller;
+package com.data.ss18.controller;
 
-import com.data.ss17.model.Customer;
-import com.data.ss17.model.CustomerLoginDTO;
-import com.data.ss17.repository.CustomerRepository;
+import com.data.ss18.model.Customer;
+import com.data.ss18.model.CustomerLoginDTO;
+import com.data.ss18.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class AuthController {
     private final CustomerRepository customerRepository;
     @Autowired
-    public  AuthController(CustomerRepository  cusRepo) {
+    public AuthController(CustomerRepository  cusRepo) {
         this.customerRepository = cusRepo;
     }
 

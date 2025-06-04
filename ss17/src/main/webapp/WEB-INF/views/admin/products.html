@@ -1,10 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+<div th:fragment="products">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Quản lý sản phẩm</h1>
+    <a th:href="@{/admin/products/add}" class="btn btn-primary">
+      <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+    </a>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <form method="get" class="row g-3">
+        <div class="col-md-4">
+          <input type="text" name="search" th:value="${search != null ? search : ''}"
+                 class="form-control" placeholder="Tìm kiếm sản phẩm...">
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-outline-secondary w-100">
+            <i class="bi bi-search"></i> Tìm kiếm
+          </button>
+        </div>
+        <div class="col-md-2">
+          <a th:href="@{/admin/products}" class="btn btn-outline-danger w-100">
+            <i class="bi bi-x-circle"></i> Xóa bộ lọc
+          </a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <div th:if="${#lists.isEmpty(products)}" class="alert alert-info">
+    <i class="bi bi-info-circle"></i> Không tìm thấy sản phẩm nào.
+  </div>
+
+  <div class="card shadow mb-4" th:if="${not #lists.isEmpty(products)}">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">
+        Danh sách sản phẩm
+        <span class="badge bg-secondary" th:text="${#lists.size(products)}"></span>
+      </h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-light">
+          <tr>
+            <th width="5%">ID</th>
+            <th width="10%">Ảnh</th>
+            <th width="25%">Tên sản phẩm</th>
+            <th width="30%">Mô tả</th>
+            <th width="10%">Giá</th>
+            <th width="8%">Tồn kho</th>
+            <th width="12%">Hành động</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="product : ${products}">
+            <td th:text="${product.id}" class="fw-bold"></td>
+            <td class="text-center">
+              <img th:src="${product.image}" width="60" height="60"
+                   class="img-thumbnail rounded" th:alt="${product.productName}"
+                   style="object-fit: cover;">
+            </td>
+            <td>
+              <div class="fw-bold" th:text="${product.productName}"></div>
+            </td>
+            <td>
+              <span th:text="${#strings.abbreviate(product.description, 80)}" class="text-muted"></span>
+            </td>
+            <td class="text-end">
+              <span class="fw-bold text-success" th:text="${#numbers.formatDecimal(product.price,1,'COMMA',2,'POINT')} + ' VNĐ'"></span>
+            </td>
+            <td class="text-center">
+                                <span class="badge" th:classappend="${product.stock > 10} ? 'bg-success' : (${product.stock > 0} ? 'bg-warning' : 'bg-danger')"
+                                      th:text="${product.stock}"></span>
+            </td>
+            <td>
+              <div class="btn-group" role="group">
+                <a th:href="@{|/admin/products/edit/${product.id}|}"
+                   class="btn btn-sm btn-outline-warning" title="Sửa">
+                  Sủa<i class="bi bi-pencil"></i>
+                </a>
+                <a th:href="@{|/admin/products/delete/${product.id}|}"
+                   class="btn btn-sm btn-outline-danger" title="Xóa"
+                   onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này?')">
+                  Xoá<i class="bi bi-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav th:if="${totalPages > 1}">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+            <a class="page-link" th:href="@{/admin/products(page=${currentPage - 1}, search=${search})}" tabindex="-1">
+              <i class="bi bi-chevron-left"></i> Trước
+            </a>
+          </li>
+
+          <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+              class="page-item" th:classappend="${i == currentPage} ? 'active'">
+            <a class="page-link" th:href="@{/admin/products(page=${i}, search=${search})}" th:text="${i}"></a>
+          </li>
+
+          <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+            <a class="page-link" th:href="@{/admin/products(page=${currentPage + 1}, search=${search})}">
+              Sau <i class="bi bi-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
 </body>
 </html>

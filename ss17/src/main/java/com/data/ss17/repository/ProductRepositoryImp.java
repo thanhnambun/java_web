@@ -35,4 +35,45 @@ public class ProductRepositoryImp implements ProductRepository {
             return Optional.ofNullable(product);
         }
     }
+    public void save(Product product) {
+        sessionFactory.getCurrentSession().save(product);
+    }
+
+    public void update(Product product) {
+        sessionFactory.getCurrentSession().update(product);
+    }
+
+    public void delete(Long id) {
+        Optional<Product> product = findById(id);
+        if (product.isPresent()) {
+            sessionFactory.getCurrentSession().delete(product);
+        }
+    }
+
+    public List<Product> findAllWithPagination(int page, int size, String search) {
+        String hql = "FROM Product WHERE (:search IS NULL OR :search = '' OR productName LIKE :searchPattern) ORDER BY id DESC";
+        return sessionFactory.getCurrentSession()
+                .createQuery(hql, Product.class)
+                .setParameter("search", search)
+                .setParameter("searchPattern", search != null ? "%" + search + "%" : null)
+                .setFirstResult((page - 1) * size)
+                .setMaxResults(size)
+                .getResultList();
+    }
+
+    public Long countWithSearch(String search) {
+        String hql = "SELECT COUNT(*) FROM Product WHERE (:search IS NULL OR :search = '' OR productName LIKE :searchPattern)";
+        return (Long) sessionFactory.getCurrentSession()
+                .createQuery(hql)
+                .setParameter("search", search)
+                .setParameter("searchPattern", search != null ? "%" + search + "%" : null)
+                .uniqueResult();
+    }
+
+    public Long countAll() {
+        String hql = "SELECT COUNT(*) FROM Product";
+        return (Long) sessionFactory.getCurrentSession()
+                .createQuery(hql)
+                .uniqueResult();
+    }
 }

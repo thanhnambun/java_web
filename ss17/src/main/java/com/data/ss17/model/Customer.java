@@ -39,5 +39,5 @@ public class Customer {
     private String phoneNumber;
 
     private String role;
-     private String status;
+     private int status;
 }

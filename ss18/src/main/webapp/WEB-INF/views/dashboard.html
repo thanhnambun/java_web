@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!-- templates/admin/dashboard.html -->
+<section th:fragment="section">
+  <h2>Thống kê tổng quan</h2>
+  <div class="row mt-3">
+    <div class="col-md-3"><div class="alert alert-info">👤 Người dùng: <b th:text="${userCount}"></b></div></div>
+    <div class="col-md-3"><div class="alert alert-success">📦 Sản phẩm: <b th:text="${productCount}"></b></div></div>
+    <div class="col-md-3"><div class="alert alert-warning">🧾 Đơn hàng: <b th:text="${orderCount}"></b></div></div>
+    <div class="col-md-3"><div class="alert alert-danger">💵 Doanh thu tháng: <b th:text="${monthlyRevenue} + ' VNĐ'"></b></div></div>
+  </div>
+</section>

@@ -46,7 +46,7 @@ public class AuthController {
 
         // Set role và status mặc định
         customer.setRole("USER");
-        customer.setStatus("ACTIVE");
+        customer.setStatus(1);
 
         // Lưu Customer vào database
         customerRepository.save(customer);

@@ -1,6 +1,6 @@
 package com.data.ss18.repository;
 
-import com.data.ss17.model.Customer;
+import com.data.ss18.model.Customer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

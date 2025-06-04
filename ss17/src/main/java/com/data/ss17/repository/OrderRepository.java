@@ -10,4 +10,8 @@ public interface OrderRepository {
     Long countByCustomerId(Long customerId);
     Orders findById(Long id);
     void update(Orders order);
+    List<Orders> findAllWithFilter(int page, int size, String search, String status, String startDate, String endDate);
+    Long countWithFilter(String search, String status, String startDate, String endDate);
+    Long countAll();
+    double getTotalRevenue();
 }

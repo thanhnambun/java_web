@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>Quản lý người dùng - Admin</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
 </head>
 <body>
+<div th:fragment="users">
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Quản lý người dùng</h1>
+    </div>
 
+    <form method="get" class="row g-3">
+      <div class="col-md-4">
+        <input type="text" name="search" th:value="${search != null ? search : ''}"
+               class="form-control" placeholder="Tìm kiếm người dùng...">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-secondary w-100">Tìm kiếm</button>
+      </div>
+      <div class="col-md-2">
+        <a th:href="@{/admin/users}" class="btn btn-outline-danger w-100">Xóa bộ lọc</a>
+      </div>
+    </form>
+
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tên đăng nhập</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th>Vai trò</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+              <td th:text="${user.id}"></td>
+              <td th:text="${user.username}"></td>
+              <td th:text="${user.email}"></td>
+              <td th:text="${user.phoneNumber}"></td>
+              <td>
+                <span class="badge bg-primary" th:if="${user.role == 'ADMIN'}">Admin</span>
+                <span class="badge bg-secondary" th:if="${user.role == 'USER'}">User</span>
+              </td>
+              <td>
+                <span class="badge bg-success" th:if="${user.status == 1}">Hoạt động</span>
+                <span class="badge bg-danger" th:if="${user.status == 0}">Bị khóa</span>
+              </td>
+              <td>
+                <form th:action="@{|/admin/users/toggle-status/${user.id}|}" method="post" style="display:inline;">
+                  <button type="submit" class="btn btn-sm btn-warning" th:if="${user.status == 1}">Khóa</button>
+                  <button type="submit" class="btn btn-sm btn-success" th:if="${user.status == 0}">Mở khóa</button>
+                </form>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <nav th:if="${totalPages > 1}">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+              <a class="page-link" th:href="@{/admin/users(page=${currentPage - 1}, search=${search})}">Trước</a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                class="page-item" th:classappend="${i == currentPage} ? 'active'">
+              <a class="page-link" th:href="@{/admin/users(page=${i}, search=${search})}" th:text="${i}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+              <a class="page-link" th:href="@{/admin/users(page=${currentPage + 1}, search=${search})}">Sau</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

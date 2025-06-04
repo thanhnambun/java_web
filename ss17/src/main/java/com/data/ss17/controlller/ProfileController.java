@@ -1,4 +1,4 @@
-package com.data.ss17.controller;
+package com.data.ss17.controlller;
 
 
 import com.data.ss17.model.Customer;

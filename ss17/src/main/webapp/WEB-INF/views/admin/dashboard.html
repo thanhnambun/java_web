@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Dashboard - Admin</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
 </head>
 <body>
-$END$
+<div th:fragment="dashboard">
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Dashboard - Thống kê tổng quan</h1>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs fw-bold text-primary text-uppercase mb-1">Tổng sản phẩm</div>
+                <div class="h5 mb-0 fw-bold text-dark" th:text="${totalProducts}">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs fw-bold text-success text-uppercase mb-1">Tổng người dùng</div>
+                <div class="h5 mb-0 fw-bold text-dark" th:text="${totalUsers}">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs fw-bold text-warning text-uppercase mb-1">Tổng đơn hàng</div>
+                <div class="h5 mb-0 fw-bold text-dark" th:text="${totalOrders}">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs fw-bold text-info text-uppercase mb-1">Doanh thu</div>
+                <div class="h5 mb-0 fw-bold text-dark" th:text="${#numbers.formatDecimal(totalRevenue,1,'COMMA',2,'POINT')} + ' VNĐ'">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

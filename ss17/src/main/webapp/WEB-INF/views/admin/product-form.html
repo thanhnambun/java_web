@@ -2,9 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>product form</title>
 </head>
 <body>
-$END$
+<div th:fragment="product-form">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+      <i class="bi bi-box" th:if="${product.id == null}"></i>
+      <i class="bi bi-pencil" th:if="${product.id != null}"></i>
+      <span th:text="${product.id == null ? 'Thêm sản phẩm mới' : 'Sửa sản phẩm'}"></span>
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/admin}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/admin/products}">Sản phẩm</a></li>
+        <li class="breadcrumb-item active" th:text="${product.id == null ? 'Thêm mới' : 'Chỉnh sửa'}"></li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="row">
+    <!-- Form chính -->
+    <div class="col-lg-8">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Thông tin sản phẩm</h6>
+        </div>
+        <div class="card-body">
+          <form th:action="@{${product.id == null} ? '/admin/products/add' : '/admin/products/edit/' + ${product.id}}"
+                th:object="${product}" method="post" enctype="multipart/form-data">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    Tên sản phẩm <span class="text-danger">*</span>
+                  </label>
+                  <input type="text" class="form-control" th:field="*{productName}"
+                         th:classappend="${#fields.hasErrors('productName')} ? 'is-invalid'"
+                         placeholder="Nhập tên sản phẩm..." required>
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Mô tả</label>
+              <textarea class="form-control" th:field="*{productDescription}" rows="4"
+                        th:classappend="${#fields.hasErrors('productDescription')} ? 'is-invalid'"
+                        placeholder="Nhập mô tả chi tiết về sản phẩm..."></textarea>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('productDescription')}" th:errors="*{productDescription}"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    Giá bán <span class="text-danger">*</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" th:field="*{productPrice}"
+                           th:classappend="${#fields.hasErrors('productPrice')} ? 'is-invalid'"
+                           step="0.01" min="0" placeholder="0.00" required>
+                    <span class="input-group-text">VNĐ</span>
+                  </div>
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}"></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    Số lượng tồn kho <span class="text-danger">*</span>
+                  </label>
+                  <input type="number" class="form-control" th:field="*{productStock}"
+                         th:classappend="${#fields.hasErrors('productStock')} ? 'is-invalid'"
+                         min="0" placeholder="0" required>
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('productStock')}" th:errors="*{productStock}"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">Hình ảnh sản phẩm</label>
+              <input type="file" class="form-control" name="imageFile" accept="image/*" id="imageFile">
+              <div class="form-text">
+                <i class="bi bi-info-circle"></i>
+                Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Kích thước tối đa 5MB.
+              </div>
+
+              <div th:if="${product.imageUrl}" class="mt-3">
+                <label class="form-label">Ảnh hiện tại:</label>
+                <div class="border rounded p-2 d-inline-block">
+                  <img th:src="${product.imageUrl}" width="150" class="img-thumbnail" th:alt="${product.productName}">
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle"></i>
+                <span th:text="${product.id == null ? 'Thêm sản phẩm' : 'Cập nhật sản phẩm'}"></span>
+              </button>
+              <a th:href="@{/admin/products}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Quay lại
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card shadow">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Preview</h6>
+        </div>
+        <div class="card-body">
+          <div class="card" style="max-width: 100%;">
+            <img th:src="${product.imageUrl ?: '/static/images/no-image.png'}"
+                 class="card-img-top" th:alt="${product.productName ?: 'Sản phẩm'}"
+                 style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${product.productName ?: 'Tên sản phẩm'}">Tên sản phẩm</h5>
+              <p class="card-text text-muted" th:text="${#strings.abbreviate(product.productDescription ?: 'Mô tả sản phẩm...', 100)}">
+                Mô tả sản phẩm...
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="h5 mb-0 text-success" th:text="${product.productPrice != null ? (#numbers.formatDecimal(product.productPrice,1,'COMMA',2,'POINT') + ' VNĐ') : '0 VNĐ'}">
+                  0 VNĐ
+                </span>
+                <small class="text-muted">
+                  Còn <span th:text="${product.productStock ?: 0}">0</span> sản phẩm
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hướng dẫn -->
+      <div class="card shadow mt-3">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-info">
+            <i class="bi bi-lightbulb"></i> Hướng dẫn
+          </h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success"></i>
+              Tên sản phẩm nên ngắn gọn, dễ hiểu
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success"></i>
+              Mô tả chi tiết giúp khách hàng hiểu rõ sản phẩm
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success"></i>
+              Ảnh chất lượng cao, kích thước phù hợp
+            </li>
+            <li>
+              <i class="bi bi-check-circle text-success"></i>
+              Giá cả hợp lý, cạnh tranh
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

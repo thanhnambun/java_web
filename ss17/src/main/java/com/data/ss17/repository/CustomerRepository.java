@@ -2,6 +2,7 @@ package com.data.ss17.repository;
 
 import com.data.ss17.model.Customer;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CustomerRepository {
@@ -10,6 +11,7 @@ public interface CustomerRepository {
     boolean save(Customer customer);
     void update(Customer customer);
     Customer findById(Long id);
-    Long getTotalCustomers(String search);
-    Long getTotalCustomers();
+    List<Customer> findAllWithPagination(int page, int size, String search);
+    Long countWithSearch(String search);
+    Long countAll();
 }
