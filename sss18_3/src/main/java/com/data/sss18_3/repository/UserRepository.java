@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -76,13 +77,13 @@ public class UserRepository {
             return false ;
         }
     }
-    public List<User> findByNameOrEmail(String searchTerm, String email) {
-        List<User> users = null;
+    public List<User> findByNameOrEmail(String searchTerm) {
+        List<User> users = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            String hql = "FROM User WHERE CONCAT(firstName, ' ', lastName) LIKE :searchTerm OR email LIKE :searchTerm";
+            String hql = "FROM User WHERE LOWER(firstName) LIKE :searchTerm OR LOWER(lastName) LIKE :searchTerm OR LOWER(email) LIKE :searchTerm";
             Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("searchTerm", "%" + searchTerm.trim() + "%");
+            query.setParameter("searchTerm", "%" + searchTerm.trim().toLowerCase() + "%");
             users = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -90,6 +91,7 @@ public class UserRepository {
         }
         return users;
     }
+
 
 
 }

@@ -41,6 +41,9 @@
 </head>
 <body>
 <h1>Danh sách người dùng</h1>
+<div th:if="${notFoundMessage}" style="color: red; margin-bottom: 15px;">
+  <p th:text="${notFoundMessage}"></p>
+</div>
 
 <a th:href="@{/add}" class="button add-btn">Thêm người dùng</a>
 <form th:action="@{/listUser}" method="get">

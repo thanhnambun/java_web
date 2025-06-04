@@ -1,4 +1,4 @@
-package com.data.sss18_3.config;
+package com.data.ss19.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -9,12 +9,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -26,17 +23,14 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.data.sss18_3") // Thay đổi thành package của bạn
+@ComponentScan(basePackages = "com.data.ss19") // Thay đổi thành package của bạn
 @EnableTransactionManagement
 
 public class AppConfig implements WebMvcConfigurer , ApplicationContextAware {
@@ -61,7 +55,7 @@ public class AppConfig implements WebMvcConfigurer , ApplicationContextAware {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/sss18_3?createDatabaseIfNotExist=true");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/ss19?createDatabaseIfNotExist=true");
         dataSource.setUsername("root");
         dataSource.setPassword("265205");
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
@@ -72,7 +66,7 @@ public class AppConfig implements WebMvcConfigurer , ApplicationContextAware {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource()); // Đảm bảo dataSource() đã được cấu hình chính xác
-        em.setPackagesToScan("com.data.sss18_3.model"); // Đường dẫn đến các entity
+        em.setPackagesToScan("com.data.ss19.model"); // Đường dẫn đến các entity
 
         // Cấu hình Hibernate
         Properties properties = new Properties();
@@ -90,7 +84,7 @@ public class AppConfig implements WebMvcConfigurer , ApplicationContextAware {
     public SessionFactory sessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
-        factoryBean.setPackagesToScan("com.data.sss18_3.model");
+        factoryBean.setPackagesToScan("com.data.ss19.model");
 
         Properties props = new Properties();
         props.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect"); // Cập nhật dialect

@@ -1,5 +1,6 @@
 package com.data.sss18_3.controller;
 
+import com.data.sss18_3.UserDTO;
 import com.data.sss18_3.model.User;
 import com.data.sss18_3.repository.UserRepository;
 import com.data.sss18_3.service.CloudinaryService;
@@ -28,7 +29,10 @@ public class UserController {
     public String listUser(@RequestParam(value = "search", required = false) String search, Model model) {
         List<User> users;
         if (search != null && !search.isEmpty()) {
-            users = userRepository.findByNameOrEmail(search, search);
+            users = userRepository.findByNameOrEmail(search);
+            if (users == null || users.isEmpty()) {
+                model.addAttribute("notFoundMessage", "Không tìm thấy người dùng phù hợp.");
+            }
         } else {
             users = userRepository.findAll();
         }
@@ -36,26 +40,31 @@ public class UserController {
         model.addAttribute("search", search);
         return "listUser";
     }
+
+
     @GetMapping("add")
     public String addUser( Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserDTO());
         return "addUser";
     }
     @PostMapping("/add")
     public String addUserSubmit(@Valid @ModelAttribute("user") User user,
                                 BindingResult bindingResult,
-                                Model model,
-                                @RequestParam("img") MultipartFile imageFile)throws IOException {
+                                @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
         if (bindingResult.hasErrors()) {
             return "addUser";
         }
-        if (imageFile.isEmpty()) {
+
+        if (imageFile != null && !imageFile.isEmpty()) {
             String imageUrl = cloudinaryService.upload(imageFile, "user");
             user.setImg(imageUrl);
         }
+
         userRepository.save(user);
         return "redirect:/listUser";
     }
+
+
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") Long id, Model model) {
         User user = userRepository.findById(id);

@@ -5,21 +5,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2be2c5e8-76de-43b0-8bb7-54452f6a0143" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../ss17/src/main/java/com/data/ss17/controlller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/data/ss18/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/data/ss18/config/AppInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/data/ss18/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/data/ss18/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/data/ss18/repository/CustomerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/data/ss18/repository/CustomerRepositoryImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/data/ss18/repository/StatisticalRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/admin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/dashboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ss17/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ss17/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ss17/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ss17/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/bt10.8UUuAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/bt8.Jn4BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/bt89.00YuAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/classicmodels.fG2wDg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/cursor_loop_sb.4X07Pg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/hkt.0ZMBAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/hkt_java_web.ZRzH7w.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/jsp_servlet_db.sNO75w.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/library.uyToCQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/manager.rQ_JMQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/personnel_recruitment._c0GEQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/product.78yN7Q.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/product_management.k-WInA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/projectmy.hfapyg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/quanlybanhang.o3BxwA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/quanlydiemsv.LgOYOw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/sakila.oXLGyQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/session17_hibernate.D_Plrw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss11.gPw1AA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss11_2.M-ioyg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss12.gfw1AA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss13.gvw1AA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss16.hfw1AA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss3.070BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss4.1L0BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss5.1b0BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss6.1r0BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss7.170BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss9.2b0BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/ss9_java.yGRE1A.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/studentmanagement.vqyvMg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/test1.302SBg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/thuchanh.dT_bXA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/webuser.H-36SA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7ee7a0c-56b1-4402-8c3d-3f9c56f5bf53/storage_v2/_src_/schema/world.khvBBg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sss18_3/src/main/java/com/data/sss18_3/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../sss18_3/src/main/java/com/data/sss18_3/config/AppConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +69,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2xzKKKIhCs78xUkPDisSy4ZmCou" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -54,30 +80,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/code/java_web/ss18/src/main/webapp/WEB-INF/views",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/code/java_web/ss18/src/main/webapp/WEB-INF/views&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\code\java_web\ss18\src\main\webapp\WEB-INF\views" />
@@ -129,6 +155,7 @@
       <option name="presentableId" value="Default" />
       <updated>1748935397083</updated>
       <workItem from="1748935398176" duration="8005000" />
+      <workItem from="1749024140751" duration="49000" />
     </task>
     <servers />
   </component>

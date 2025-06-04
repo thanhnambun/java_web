@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Quản lý phòng chiếu</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Danh sách phòng chiếu</h2>
+    <a th:href="@{/screen-rooms/add}" class="btn btn-primary">Thêm phòng chiếu mới</a>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên phòng</th>
+      <th>Rạp chiếu</th>
+      <th>Loại màn hình</th>
+      <th>Sức chứa</th>
+      <th>Trạng thái</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="screenRoom : ${screenRooms}">
+      <td th:text="${screenRoom.id}"></td>
+      <td th:text="${screenRoom.roomName}"></td>
+      <td th:text="${screenRoom.theater?.theaterName ?: 'Chưa gán'}"></td>
+      <td>
+                <span class="badge" th:classappend="${screenRoom.screenType == '2D'} ? 'bg-info' : (${screenRoom.screenType == '3D'} ? 'bg-warning' : 'bg-success')"
+                      th:text="${screenRoom.screenType}"></span>
+      </td>
+      <td th:text="${screenRoom.capacity}"></td>
+      <td>
+                <span class="badge" th:classappend="${screenRoom.status} ? 'bg-success' : 'bg-danger'"
+                      th:text="${screenRoom.status} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></span>
+      </td>
+      <td>
+        <a th:href="@{|/screen-rooms/edit/${screenRoom.id}|}" class="btn btn-sm btn-warning">Sửa</a>
+        <a th:href="@{|/screen-rooms/delete/${screenRoom.id}|}" class="btn btn-sm btn-danger"
+           onclick="return confirm('Bạn có chắc muốn xóa phòng chiếu này?')">Xóa</a>
+        <a th:href="@{|/screen-rooms/seats/${screenRoom.id}|}" class="btn btn-sm btn-info">Xem ghế</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div th:if="${#lists.isEmpty(screenRooms)}" class="alert alert-info">
+    Chưa có phòng chiếu nào. <a th:href="@{/screen-rooms/add}">Thêm phòng chiếu đầu tiên</a>
+  </div>
+</div>
+</body>
+</html>

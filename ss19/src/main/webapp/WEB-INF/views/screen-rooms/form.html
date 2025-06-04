@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${screenRoom.id == null ? 'Thêm phòng chiếu mới' : 'Chỉnh sửa phòng chiếu'}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 th:text="${screenRoom.id == null ? 'Thêm phòng chiếu mới' : 'Chỉnh sửa phòng chiếu'}"></h2>
+
+    <form th:action="@{${screenRoom.id == null ? '/screen-rooms/add' : '/screen-rooms/edit/' + screenRoom.id}}"
+          th:object="${screenRoom}" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Tên phòng chiếu *</label>
+            <input type="text" th:field="*{roomName}" class="form-control"
+                   th:classappend="${#fields.hasErrors('roomName')} ? 'is-invalid'"
+                   placeholder="Ví dụ: Phòng A1, Phòng VIP 1...">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('roomName')}" th:errors="*{roomName}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rạp chiếu *</label>
+            <select name="theaterId" class="form-select" required>
+                <option value="">-- Chọn rạp chiếu --</option>
+                <option th:each="theater : ${theaters}"
+                        th:value="${theater.theater_id}"
+                        th:text="${theater.theaterName + ' - ' + theater.address}"
+                        th:selected="${screenRoom.theater != null and screenRoom.theater.theater_id == theater.theater_id}"></option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Loại màn hình *</label>
+                    <select th:field="*{screenType}" class="form-select"
+                            th:classappend="${#fields.hasErrors('screenType')} ? 'is-invalid'">
+                        <option value="">-- Chọn loại màn hình --</option>
+                        <option value="2D">2D</option>
+                        <option value="3D">3D</option>
+                        <option value="IMAX">IMAX</option>
+                    </select>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('screenType')}" th:errors="*{screenType}"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Sức chứa (số ghế) *</label>
+                    <input type="number" th:field="*{capacity}" class="form-control"
+                           th:classappend="${#fields.hasErrors('capacity')} ? 'is-invalid'"
+                           min="1" max="500" placeholder="Ví dụ: 100">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+                    <div class="form-text">Hệ thống sẽ tự động tạo ghế theo sức chứa này</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="form-check">
+                <input type="checkbox" th:field="*{status}" class="form-check-input">
+                <label class="form-check-label">Đang hoạt động</label>
+            </div>
+        </div>
+
+        <div class="alert alert-info" th:if="${screenRoom.id == null}">
+            <strong>Lưu ý:</strong> Sau khi tạo phòng chiếu, hệ thống sẽ tự động tạo ghế theo quy tắc A1, A2, ..., B1, B2, ... với số lượng bằng sức chứa.
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <span th:text="${screenRoom.id == null ? 'Thêm phòng chiếu' : 'Cập nhật'}"></span>
+        </button>
+        <a th:href="@{/screen-rooms}" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+</body>
+</html>

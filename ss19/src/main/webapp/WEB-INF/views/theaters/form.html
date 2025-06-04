@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${theater.theater_id == null ? 'Thêm rạp mới' : 'Chỉnh sửa rạp'}"></title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 th:text="${theater.theater_id == null ? 'Thêm rạp mới' : 'Chỉnh sửa rạp'}"></h2>
+
+  <form th:action="@{${theater.theater_id == null ? '/theaters/add' : '/theaters/edit/' + theater.theater_id}}"
+        th:object="${theater}" method="post">
+
+    <div class="mb-3">
+      <label class="form-label">Tên rạp *</label>
+      <input type="text" th:field="*{theaterName}" class="form-control"
+             th:classappend="${#fields.hasErrors('theaterName')} ? 'is-invalid'">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('theaterName')}" th:errors="*{theaterName}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Địa chỉ *</label>
+      <input type="text" th:field="*{address}" class="form-control"
+             th:classappend="${#fields.hasErrors('address')} ? 'is-invalid'">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Số phòng chiếu *</label>
+      <input type="number" th:field="*{numberScreenRoom}" class="form-control"
+             th:classappend="${#fields.hasErrors('numberScreenRoom')} ? 'is-invalid'">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('numberScreenRoom')}" th:errors="*{numberScreenRoom}"></div>
+    </div>
+
+    <div class="mb-3">
+      <div class="form-check">
+        <input type="checkbox" th:field="*{status}" class="form-check-input">
+        <label class="form-check-label">Đang hoạt động</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+      <span th:text="${theater.theater_id == null ? 'Thêm rạp' : 'Cập nhật'}"></span>
+    </button>
+    <a th:href="@{/theaters}" class="btn btn-secondary">Hủy</a>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Danh sách ghế - Phòng chiếu</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+  <style>
+    .seat-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 5px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .seat {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      border-radius: 5px;
+    }
+    .seat.available {
+      background-color: #28a745;
+      color: white;
+    }
+    .seat.unavailable {
+      background-color: #dc3545;
+      color: white;
+    }
+    .screen {
+      width: 100%;
+      height: 30px;
+      background-color: #333;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Danh sách ghế - <span th:text="${screenRoom.roomName}"></span></h2>
+    <a th:href="@{/screen-rooms}" class="btn btn-secondary">Quay lại</a>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Thông tin phòng chiếu</h5>
+          <p><strong>Tên phòng:</strong> <span th:text="${screenRoom.roomName}"></span></p>
+          <p><strong>Loại màn hình:</strong> <span th:text="${screenRoom.screenType}"></span></p>
+          <p><strong>Sức chứa:</strong> <span th:text="${screenRoom.capacity}"></span> ghế</p>
+          <p><strong>Số ghế đã tạo:</strong> <span th:text="${#lists.size(seats)}"></span> ghế</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Chú thích</h5>
+          <div class="d-flex align-items-center mb-2">
+            <div class="seat available me-2"></div>
+            <span>Ghế có thể sử dụng</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="seat unavailable me-2"></div>
+            <span>Ghế không thể sử dụng</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mb-4">
+    <div class="screen">MÀN HÌNH</div>
+    <div class="seat-grid">
+      <div th:each="seat : ${seats}"
+           class="seat"
+           th:classappend="${seat.status} ? 'available' : 'unavailable'"
+           th:text="${seat.seatName}"
+           th:title="'Ghế ' + ${seat.seatName} + (${seat.status} ? ' - Có thể sử dụng' : ' - Không thể sử dụng')">
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${#lists.isEmpty(seats)}" class="alert alert-warning text-center">
+    Phòng chiếu này chưa có ghế nào được tạo.
+  </div>
+</div>
+</body>
+</html>
