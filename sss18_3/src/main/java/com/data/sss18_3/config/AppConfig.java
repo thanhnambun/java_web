@@ -27,7 +27,7 @@ import javax.persistence.EntityManager;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.data.ss18_2")
+@ComponentScan(basePackages = "com.data.sss18_3")
 public class AppConfig implements WebMvcConfigurer {
 
     @Autowired

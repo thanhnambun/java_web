@@ -1,8 +1,8 @@
 package com.data.sss18_3.controller;
 
-import com.data.ss18_2.model.User;
-import com.data.ss18_2.repository.UserRepository;
-import com.data.ss18_2.service.CloudinaryService;
+import com.data.sss18_3.model.User;
+import com.data.sss18_3.repository.UserRepository;
+import com.data.sss18_3.service.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

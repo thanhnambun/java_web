@@ -1,6 +1,6 @@
 package com.data.sss18_3.repository;
 
-import com.data.ss18_2.model.User;
+import com.data.sss18_3.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
