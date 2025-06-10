@@ -11,4 +11,5 @@ public interface StudentService {
     boolean save(Student student);
     boolean update(Student student);
     boolean delete(String id);
+    List<Student> findAllSt();
 }

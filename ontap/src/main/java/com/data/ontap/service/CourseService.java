@@ -11,4 +11,5 @@ public interface CourseService {
     boolean createCourse(Course course);
     boolean updateCourse(Course course);
     boolean deleteCourse(Long id);
+    List<Course> findAllCous();
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đăng ký khóa học</title>
+</head>
+<body>
+<h1>Đăng ký khóa học</h1>
+
+<form th:action="@{/register-course}" method="post">
+    <label for="idCourse">Chọn khóa học:</label>
+    <select name="idCourse" id="idCourse">
+        <option th:each="course : ${courses}"
+                th:value="${course.id}"
+                th:text="${course.name}"></option>
+    </select>
+
+    <br><br>
+
+    <label for="idStudent">Chọn sinh viên:</label>
+    <select name="idStudent" id="idStudent">
+        <option th:each="student : ${students}"
+                th:value="${student.id}"
+                th:text="${student.name}"></option>
+    </select>
+
+    <br><br>
+    <button type="submit">Đăng ký</button>
+</form>
+
+<hr>
+
+<h2>Danh sách đăng ký</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên khóa học</th>
+        <th>Tên sinh viên</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="register : ${registers}">
+        <td th:text="${register.id}"></td>
+        <td th:text="${register.courseName}"></td>
+        <td th:text="${register.studentName}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

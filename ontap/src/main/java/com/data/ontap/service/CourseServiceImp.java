@@ -39,4 +39,9 @@ public class CourseServiceImp implements CourseService{
     public boolean deleteCourse(Long id) {
         return courseRepo.delete(id);
     }
+
+    @Override
+    public List<Course> findAllCous() {
+        return courseRepo.findAllCous();
+    }
 }

@@ -11,4 +11,5 @@ public interface CourseRepo {
     boolean save(Course course);
     boolean delete(Long id);
     boolean update(Course course);
+    List<Course> findAllCous();
 }

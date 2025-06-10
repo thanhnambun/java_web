@@ -12,4 +12,5 @@ public interface StudentRepo {
     boolean update(Student student);
     boolean delete(String id);
     Student findTopByOrderByIdDesc();
+    List<Student> findAllSt();
 }

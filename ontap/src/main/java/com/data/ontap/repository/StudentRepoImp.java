@@ -1,5 +1,6 @@
 package com.data.ontap.repository;
 
+import com.data.ontap.model.Course;
 import com.data.ontap.model.Student;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -166,5 +168,19 @@ public class StudentRepoImp implements StudentRepo {
         return student;
     }
 
-
+    @Override
+    public List<Student> findAllSt() {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            Query<Student> query = session.createQuery(
+                    "FROM Student ", Student.class);
+            return query.getResultList();
+        } catch (HibernateException e) {
+            System.err.println("Error searching student by name: " + e.getMessage());
+            return Collections.emptyList();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

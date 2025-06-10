@@ -133,4 +133,20 @@ public class CourseRepoImpl implements CourseRepo {
             if (session != null) session.close();
         }
     }
+
+    @Override
+    public List<Course> findAllCous() {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            Query<Course> query = session.createQuery(
+                    "FROM Course ", Course.class);
+            return query.getResultList();
+        } catch (HibernateException e) {
+            System.err.println("Error searching courses by name: " + e.getMessage());
+            return Collections.emptyList();
+        } finally {
+            if (session != null) session.close();
+        }
+    }
 }

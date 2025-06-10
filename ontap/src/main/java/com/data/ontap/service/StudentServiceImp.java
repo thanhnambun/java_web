@@ -44,6 +44,11 @@ public class StudentServiceImp implements StudentService {
         return studentRepo.delete(id);
     }
 
+    @Override
+    public List<Student> findAllSt() {
+        return studentRepo.findAllSt();
+    }
+
     public String generateStudentId() {
         Student lastStudent = studentRepo.findTopByOrderByIdDesc();
         if (lastStudent == null) {
