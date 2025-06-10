@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Form</title>
+</head>
+<body>
+<h1 th:text="${course.id} != null ? 'Edit Course' : 'Create Course'"></h1>
+
+<form th:action="${course.id} != null ? '/course/edit' : '/course/create'" method="post">
+    <input type="hidden" name="id" th:value="${course.id}"/>
+
+    <label>Name:</label>
+    <input type="text" name="name" th:value="${course.name}" required/><br/>
+
+    <label>Description:</label>
+    <input type="text" name="description" th:value="${course.description}"/><br/>
+
+    <button type="submit">Submit</button>
+</form>
+
+<a th:href="@{/WEB-INF/views/course/list}">Back to List</a>
+</body>
+</html>

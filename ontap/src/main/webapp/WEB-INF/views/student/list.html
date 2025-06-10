@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách sinh viên</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Danh sách Sinh viên</h1>
+
+<form th:action="@{/student/search}" method="get">
+    <input type="text" name="keyword" placeholder="Tìm theo tên..." th:value="${keyword}">
+    <button type="submit">Tìm kiếm</button>
+</form>
+
+<a th:href="@{/student/create}">Thêm sinh viên mới</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Mã SV</th>
+        <th>Tên SV</th>
+        <th>Giới tính</th>
+        <th>Tuổi</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.id}">Mã SV</td>
+        <td th:text="${student.name}">Tên SV</td>
+        <td th:text="${student.getSex()}">Giới tính</td>
+        <td th:text="${student.getBod()}">Tuổi</td>
+        <td>
+            <a th:href="@{'/student/edit/' + ${student.id}}">Sửa</a> |
+            <a th:href="@{'/student/delete/' + ${student.id}}"
+               onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <span>Trang hiện tại: <span th:text="${currentPage}"></span></span>
+</div>
+</body>
+</html>

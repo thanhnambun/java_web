@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Form</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2 th:text="${#strings.isEmpty(student.id) ? 'Thêm Sinh Viên' : 'Cập Nhật Sinh Viên'}"></h2>
+
+<form th:action="@{${#strings.isEmpty(student.id) ? '/student/create' : '/student/edit'}}"
+      th:object="${student}"
+      method="post" enctype="multipart/form-data">
+
+    <!-- Chỉ hiển thị ID khi cập nhật -->
+    <div th:if="${not #strings.isEmpty(student.id)}">
+        <label>ID:</label>
+        <input type="text" th:field="*{id}" readonly />
+        <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+    </div>
+
+    <div>
+        <label>Tên:</label>
+        <input type="text" th:field="*{name}" />
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+
+    <div>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" />
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </div>
+
+    <div>
+        <label>Phone:</label>
+        <input type="text" th:field="*{phone}" />
+        <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+    </div>
+
+    <div>
+        <label>Giới tính:</label>
+        <input type="radio" th:field="*{sex}" value="true" /> Nam
+        <input type="radio" th:field="*{sex}" value="false" /> Nữ
+        <span th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}"></span>
+    </div>
+
+    <div>
+        <label>Ngày sinh:</label>
+        <input type="date" th:field="*{bod}" />
+        <span th:if="${#fields.hasErrors('bod')}" th:errors="*{bod}"></span>
+    </div>
+
+    <div>
+        <label>Trạng thái:</label>
+        <select th:field="*{status}">
+            <option value="true">Hoạt động</option>
+            <option value="false">Ngừng hoạt động</option>
+        </select>
+        <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+    </div>
+
+    <div>
+        <label>Ảnh đại diện:</label>
+        <input type="file" name="imageFile" />
+        <span th:if="${uploadError}" th:text="${uploadError}"></span>
+    </div>
+
+    <div th:if="${student.avatar != null}">
+        <p>Ảnh hiện tại:</p>
+        <img th:src="${student.avatar}" alt="Avatar" width="150" height="150"/>
+    </div>
+
+    <div>
+        <button type="submit">Lưu</button>
+    </div>
+</form>
+
+<a th:href="@{/student/list}">Quay lại danh sách</a>
+</body>
+</html>
