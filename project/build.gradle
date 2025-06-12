@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'ra.edu'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.10.2'
+    springVersion = "5.3.37"
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Servlet API
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+    implementation 'org.modelmapper:modelmapper:3.1.1'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+
+    // Hibernate Core
+    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+
+    // Hibernate Validator (for JSR 380 - javax.validation)
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.hibernate.validator:hibernate-validator:6.2.5.Final'
+
+    // JPA API
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+
+    // MySQL JDBC Driver
+    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+
+    // Spring Core / Context / Beans (DI, AOP, Validation, etc.)
+    implementation "org.springframework:spring-core:${springVersion}"
+    implementation "org.springframework:spring-context:${springVersion}"
+    implementation "org.springframework:spring-beans:${springVersion}"
+    implementation "org.springframework:spring-context-support:${springVersion}"
+
+    // Spring Web / MVC / ORM
+    implementation "org.springframework:spring-web:${springVersion}"
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "org.springframework:spring-orm:${springVersion}"
+
+    // SLF4J Logging
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    runtimeOnly 'org.slf4j:slf4j-simple:1.7.30'
+
+    // JSTL (for JSP view if needed)
+    implementation 'javax.servlet:jstl:1.2'
+
+    // Thymeleaf for Spring
+    implementation 'org.thymeleaf:thymeleaf-spring5:3.0.12.RELEASE'
+
+    // Cloudinary + FileUpload (if using file/image upload)
+    implementation 'com.cloudinary:cloudinary-http44:1.36.0'
+    implementation 'commons-fileupload:commons-fileupload:1.5'
+
+    // Lombok (getter/setter/toString/constructors)
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    // Webjars Bootstrap (for Bootstrap CSS/JS via Webjars)
+    implementation 'org.webjars:bootstrap:5.3.5'
+
+    // JUnit 5 for Testing
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+
+test {
+    useJUnitPlatform()
+}
