@@ -54,16 +54,18 @@ public class CandidateRepositoryImp implements CandidateRepository {
         return query.getResultList();
     }
 
-//    @Override
-//    public List<Candidate> filterByAge(int age, int pageNumber, int pageSize) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query<Candidate> query = session.createQuery(
-//                "FROM Candidate c WHERE c.age = :age", Candidate.class);
-//        query.setParameter("age", age);
-//        query.setFirstResult((pageNumber - 1) * pageSize);
-//        query.setMaxResults(pageSize);
-//        return query.getResultList();
-//    }
+    @Override
+    public List<Candidate> filterByAge(int age, int pageNumber, int pageSize) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<Candidate> query = session.createQuery(
+                "FROM Candidate c WHERE (year(current_date()) - year(c.dob)) = :age", Candidate.class);
+
+        query.setParameter("age", age);
+        query.setFirstResult((pageNumber - 1) * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
+    }
 
     @Override
     public List<Candidate> filterByGender(String gender, int pageNumber, int pageSize) {
@@ -76,16 +78,17 @@ public class CandidateRepositoryImp implements CandidateRepository {
         return query.getResultList();
     }
 
-//    @Override
-//    public List<Candidate> filterByTechnology(String technology, int pageNumber, int pageSize) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query<Candidate> query = session.createQuery(
-//                "FROM Candidate c WHERE c.technology LIKE :technology", Candidate.class);
-//        query.setParameter("technology", "%" + technology + "%");
-//        query.setFirstResult((pageNumber - 1) * pageSize);
-//        query.setMaxResults(pageSize);
-//        return query.getResultList();
-//    }
+    @Override
+    public List<Candidate> filterByTechnology(String technology, int pageNumber, int pageSize) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Candidate> query = session.createQuery(
+                "SELECT c FROM Candidate c JOIN c.technologies t WHERE t.name LIKE :technology", Candidate.class);
+        query.setParameter("technology", "%" + technology + "%");
+        query.setFirstResult((pageNumber - 1) * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
+    }
+
 
     @Override
     public int resetPassword(int userId, String newPassword) {
@@ -128,14 +131,14 @@ public class CandidateRepositoryImp implements CandidateRepository {
         return query.uniqueResult().intValue();
     }
 
-//    @Override
-//    public int getTotalCandidatesByAge(int age) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query<Long> query = session.createQuery(
-//                "SELECT COUNT(*) FROM Candidate c WHERE c.age = :age", Long.class);
-//        query.setParameter("age", age);
-//        return query.uniqueResult().intValue();
-//    }
+    @Override
+    public int getTotalCandidatesByAge(int age) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Long> query = session.createQuery(
+                "SELECT COUNT(*) FROM Candidate c WHERE (year(current_date()) - year(c.dob)) = :age", Long.class);
+        query.setParameter("age", age);
+        return query.uniqueResult().intValue();
+    }
 
     @Override
     public int getTotalCandidatesByGender(String gender) {
@@ -146,14 +149,14 @@ public class CandidateRepositoryImp implements CandidateRepository {
         return query.uniqueResult().intValue();
     }
 
-//    @Override
-//    public int getTotalCandidatesByTechnology(String technology) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query<Long> query = session.createQuery(
-//                "SELECT COUNT(*) FROM Candidate c WHERE c.technology LIKE :technology", Long.class);
-//        query.setParameter("technology", "%" + technology + "%");
-//        return query.uniqueResult().intValue();
-//    }
+    @Override
+    public int getTotalCandidatesByTechnology(String technology) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Long> query = session.createQuery(
+                "SELECT COUNT(*) from Candidate c JOIN c.technologies t WHERE t.name LIKE :technology", Long.class);
+        query.setParameter("technology", "%" + technology + "%");
+        return query.uniqueResult().intValue();
+    }
 
     public void save(Candidate candidate) {
         Session session = sessionFactory.getCurrentSession();

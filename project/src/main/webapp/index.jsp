@@ -1,13 +1,28 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>JSP - Hello World</title>
-</head>
-<body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="login">login</a>
-</body>
-</html>
+<%@ page import="javax.servlet.http.Cookie" %>
+<%--<%--%>
+<%--    Cookie[] cookies = request.getCookies();--%>
+<%--    String role = null;--%>
+
+<%--    if (cookies != null) {--%>
+<%--        for (Cookie cookie : cookies) {--%>
+<%--            if ("role".equals(cookie.getName())) {--%>
+<%--                role = cookie.getValue();--%>
+<%--                break;--%>
+<%--            }--%>
+<%--        }--%>
+<%--    }--%>
+
+<%--    if ("ADMIN".equals(role)) {--%>
+<%--        response.sendRedirect("admin/home");--%>
+<%--        return;--%>
+<%--    } else if ("USER".equals(role)) {--%>
+<%--        response.sendRedirect("user/home");--%>
+<%--        return;--%>
+<%--    } else {--%>
+<%--        response.sendRedirect("login");--%>
+<%--        return;--%>
+<%--    }--%>
+<%--%>--%>
+
+<p>PPPP</p>

@@ -42,13 +42,13 @@ public class CandidateService {
                 .collect(Collectors.toList());
     }
 
-//    @Transactional(readOnly = true)
-//    public List<CandidateDTO> filterByAge(int age, int pageNumber, int pageSize) {
-//        List<Candidate> candidates = candidateRepositoryImp.filterByAge(age, pageNumber, pageSize);
-//        return candidates.stream()
-//                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
-//                .collect(Collectors.toList());
-//    }
+    @Transactional(readOnly = true)
+    public List<CandidateDTO> filterByAge(int age, int pageNumber, int pageSize) {
+        List<Candidate> candidates = candidateRepositoryImp.filterByAge(age, pageNumber, pageSize);
+        return candidates.stream()
+                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
+                .collect(Collectors.toList());
+    }
 
     @Transactional(readOnly = true)
     public List<CandidateDTO> filterByGender(String gender, int pageNumber, int pageSize) {
@@ -58,13 +58,13 @@ public class CandidateService {
                 .collect(Collectors.toList());
     }
 
-//    @Transactional(readOnly = true)
-//    public List<CandidateDTO> filterByTechnology(String technology, int pageNumber, int pageSize) {
-//        List<Candidate> candidates = candidateRepositoryImp.filterByTechnology(technology, pageNumber, pageSize);
-//        return candidates.stream()
-//                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
-//                .collect(Collectors.toList());
-//    }
+    @Transactional(readOnly = true)
+    public List<CandidateDTO> filterByTechnology(String technology, int pageNumber, int pageSize) {
+        List<Candidate> candidates = candidateRepositoryImp.filterByTechnology(technology, pageNumber, pageSize);
+        return candidates.stream()
+                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public boolean resetPassword(int userId, String newPassword) {
@@ -92,18 +92,18 @@ public class CandidateService {
         return candidateRepositoryImp.getTotalCandidatesByExperience(experience);
     }
 
-//    @Transactional(readOnly = true)
-//    public int getTotalCandidatesByAge(int age) {
-//        return candidateRepositoryImp.getTotalCandidatesByAge(age);
-//    }
+    @Transactional(readOnly = true)
+    public int getTotalCandidatesByAge(int age) {
+        return candidateRepositoryImp.getTotalCandidatesByAge(age);
+    }
 
     @Transactional(readOnly = true)
     public int getTotalCandidatesByGender(String gender) {
         return candidateRepositoryImp.getTotalCandidatesByGender(gender);
     }
 
-//    @Transactional(readOnly = true)
-//    public int getTotalCandidatesByTechnology(String technology) {
-//        return candidateRepositoryImp.getTotalCandidatesByTechnology(technology);
-//    }
+    @Transactional(readOnly = true)
+    public int getTotalCandidatesByTechnology(String technology) {
+        return candidateRepositoryImp.getTotalCandidatesByTechnology(technology);
+    }
 }

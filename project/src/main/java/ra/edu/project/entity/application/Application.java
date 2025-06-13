@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ra.edu.project.entity.candidate.Candidate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Application  {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int candidateId;
     private int recruitmentPositionId;
@@ -33,6 +32,9 @@ public class Application  {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private String destroyReason;
+    @ManyToOne
+    private Candidate candidate;
+
 
     @PrePersist
     public void prePersist() {

@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ra.edu.project.entity.technology.Technology;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 import java.util.List;
@@ -21,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RecruitmentPosition {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;
@@ -30,7 +28,7 @@ public class RecruitmentPosition {
     private LocalDate createdDate;
     private LocalDate expiredDate;
     private Status status;
-    @OneToMany
+    @ManyToMany(mappedBy = "recruitmentPositions")
     private List<Technology> technologies;
 
     @PrePersist

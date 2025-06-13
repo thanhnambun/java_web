@@ -69,7 +69,7 @@ public class UserService {
     }
 
     @Transactional
-    public User login(String username, String password, HttpServletResponse response) {
+    public User login(String username, String password, HttpServletResponse response, boolean rememberMe) {
         User user = userRepositoryImp.findByUsername(username);
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
             // Lưu username và role vào cookie
@@ -77,8 +77,15 @@ public class UserService {
             Cookie roleCookie = new Cookie("role", user.getRole().toString());
             usernameCookie.setPath("/");
             roleCookie.setPath("/");
-            usernameCookie.setMaxAge(24 * 60 * 60); // 1 ngày
-            roleCookie.setMaxAge(24 * 60 * 60);
+
+            if (rememberMe) {
+                // Lưu trong 7 ngày
+                usernameCookie.setMaxAge(1 * 24 * 60 * 60);
+                roleCookie.setMaxAge(1 * 24 * 60 * 60);
+            } else {
+                usernameCookie.setMaxAge(-1);
+                roleCookie.setMaxAge(-1);
+            }
 
             response.addCookie(usernameCookie);
             response.addCookie(roleCookie);
@@ -87,6 +94,8 @@ public class UserService {
         }
         return null;
     }
+
+
 
 
     public void logout(HttpServletResponse response) {

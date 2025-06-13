@@ -40,6 +40,6 @@ public class CandidateDTO {
 
     @NotNull(message = "Ngày sinh không được để trống")
     @Past(message = "Ngày sinh phải là ngày trong quá khứ")
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Chỉ định định dạng ngày
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 }

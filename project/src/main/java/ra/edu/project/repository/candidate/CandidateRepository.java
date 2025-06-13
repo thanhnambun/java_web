@@ -11,11 +11,11 @@ public interface CandidateRepository {
 
     List<Candidate> filterByExperience(int experience, int pageNumber, int pageSize); // Thêm phân trang
 
-//    List<Candidate> filterByAge(int age, int pageNumber, int pageSize); // Thêm phân trang
+    List<Candidate> filterByAge(int age, int pageNumber, int pageSize); // Thêm phân trang
 
     List<Candidate> filterByGender(String gender, int pageNumber, int pageSize); // Thêm phân trang
 
-//    List<Candidate> filterByTechnology(String technology, int pageNumber, int pageSize); // Thêm phân trang
+    List<Candidate> filterByTechnology(String technology, int pageNumber, int pageSize); // Thêm phân trang
 
     int resetPassword(int userId, String newPassword);
 
@@ -27,9 +27,9 @@ public interface CandidateRepository {
 
     int getTotalCandidatesByExperience(int experience); // Thêm để lấy tổng số ứng viên theo kinh nghiệm
 
-//    int getTotalCandidatesByAge(int age); // Thêm để lấy tổng số ứng viên theo tuổi
+    int getTotalCandidatesByAge(int age); // Thêm để lấy tổng số ứng viên theo tuổi
 
     int getTotalCandidatesByGender(String gender); // Thêm để lấy tổng số ứng viên theo giới tính
 
-//    int getTotalCandidatesByTechnology(String technology); // Thêm để lấy tổng số ứng viên theo công nghệ
+    int getTotalCandidatesByTechnology(String technology); // Thêm để lấy tổng số ứng viên theo công nghệ
 }

@@ -7,14 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ra.edu.project.dto.RegistrationDTO;
 import ra.edu.project.dto.UserDTO;
 import ra.edu.project.dto.CandidateDTO;
 import ra.edu.project.entity.user.User;
+import ra.edu.project.entity.user.UserRole;
 import ra.edu.project.service.UserService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,6 +26,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/")
+    public String home( HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String role = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("role".equals(cookie.getName())) {
+                    role = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if ("ADMIN".equals(role)) {
+            return "redirect:/admin/home";
+        } else if ("USER".equals(role)) {
+            return "redirect:/user/home";
+        } else {
+            return "redirect:/login";
+        }
+    }
     @GetMapping("/login")
     public String showLogin(Model model) {
         model.addAttribute("userDTO", new UserDTO());
@@ -30,16 +55,28 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserDTO userDTO, Model model, HttpSession session, HttpServletResponse response) {
+    public String login(@RequestParam("username") String username,
+                        @RequestParam("password") String password,
+                        @RequestParam(value = "remember", required = false) String remember,
+                        HttpServletResponse response,
+                        Model model) {
 
-        User user = userService.login(userDTO.getUsername(), userDTO.getPassword(), response);
+        boolean rememberMe = "true".equals(remember);
+        User user = userService.login(username, password, response, rememberMe);
+
         if (user != null) {
-            session.setAttribute("user", user);
-            return "redirect:/home";
+            if ("ADMIN".equals(user.getRole().toString())) {
+                return "redirect:/admin/home";
+            } else if ("USER".equals(user.getRole().toString())) {
+                return "redirect:/user/home";
+            }
         }
+
         model.addAttribute("error", "Invalid username or password");
         return "login";
     }
+
+
 
     @GetMapping("/register")
     public String showRegister(Model model) {
@@ -52,8 +89,6 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute RegistrationDTO registrationDTO, Model model) {
-//        String password = registrationDTO.getUserDTO().getPassword();
-//        String password2 = BCrypt.hashpw(password, BCrypt.gensalt(10));
         System.out.println(registrationDTO);
         List<String> errors = userService.register(registrationDTO);
         if (errors == null) {

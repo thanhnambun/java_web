@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ra.edu.project.entity.candidate.Candidate;
+import ra.edu.project.repository.candidate.CandidateRepository;
 
 import javax.persistence.*;
 
@@ -21,7 +23,6 @@ public class User  {
     private String password;
     private UserRole role;
     private Status status;
-
     @PrePersist
     public void prePersist() {
         status = Status.ACTIVE;
