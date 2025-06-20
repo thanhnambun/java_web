@@ -27,8 +27,14 @@ public class RecruitmentPosition {
     private int minExperience;
     private LocalDate createdDate;
     private LocalDate expiredDate;
+    @Enumerated(EnumType.STRING)
     private Status status;
-    @ManyToMany(mappedBy = "recruitmentPositions")
+    @ManyToMany
+    @JoinTable(
+            name = "recruitmentPositions_technology",
+            joinColumns = @JoinColumn(name = "recruitment_position_id"),
+            inverseJoinColumns = @JoinColumn(name = "technology_id")
+    )
     private List<Technology> technologies;
 
     @PrePersist

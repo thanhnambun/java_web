@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sidebar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
@@ -10,11 +10,11 @@
     <div>
         <h6 class="fw-bold mb-4">🔻 My Company</h6>
         <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link text-dark" href="#">📊 Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="#">👤 Candidate</a></li>
-            <li class="nav-item"><a class="nav-link active" href="#">📚 Technology</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="#">📌 Recruitment Position</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="#">🗂️ Application</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/admin/dashboard">📊 Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/admin/candidate">👤 Candidate</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/admin/technologies">📚 Technology</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/admin/recruitmentPosition">📌 Recruitment Position</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/admin/application">🗂️ Application</a></li>
         </ul>
     </div>
     <div class="profile d-flex align-items-center px-2">
@@ -22,7 +22,7 @@
         <div class="ms-2">
             <div class="fw-bold">Admin</div>
             <a href="#" class="text-decoration-none text-muted small">admin@gmail.com</a><br/>
-            <a href="#" class="text-danger small">🚪 Log out</a>
+            <a href="/logout" class="text-danger small">🚪 Log out</a>
         </div>
     </div>
 </div>

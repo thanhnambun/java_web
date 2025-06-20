@@ -58,37 +58,53 @@ public class TechnologyController {
     }
 
     @PostMapping("/save")
-    public String saveTechnology(@ModelAttribute("technology") TechnologyDTO technologyDTO) {
+    public String saveTechnology(@ModelAttribute("technology") TechnologyDTO technologyDTO, Model model) {
         Technology technology;
+        String message = null;
 
         if (technologyDTO.getId() == 0) {
             // Thêm mới
             technology = new Technology();
-            technology.setStatus(Status.ACTIVE); // mặc định ACTIVE khi thêm
+            technology.setStatus(Status.ACTIVE);
+            technology.setName(technologyDTO.getName());
+            technologyService.addTechnology(technology);
+            message = "Thêm công nghệ mới thành công!";
         } else {
             // Cập nhật
             technology = technologyService.getTechnologyEntityById(technologyDTO.getId());
             if (technology == null) {
-                // Không tìm thấy thì xử lý phù hợp
-                return "redirect:/admin/technologies?error=notfound";
+                model.addAttribute("error", "Không tìm thấy công nghệ để cập nhật!");
+            } else {
+                technology.setName(technologyDTO.getName());
+                technologyService.updateTechnology(technology);
+                message = "Cập nhật công nghệ thành công!";
             }
         }
 
-        technology.setName(technologyDTO.getName());
-
-        if (technologyDTO.getId() == 0) {
-            technologyService.addTechnology(technology);
-        } else {
-            technologyService.updateTechnology(technology);
-        }
-
-        return "redirect:/admin/technologies";
+        // Load lại danh sách để hiển thị cùng trang
+        List<TechnologyDTO> technologies = technologyService.getAllTechnologies(1, Integer.MAX_VALUE);
+        model.addAttribute("technologies", technologies);
+        model.addAttribute("message", message);
+        model.addAttribute("currentPage", 1);
+        model.addAttribute("totalPages", 1); // Không phân trang khi reload
+        return "admin/technology"; // quay lại trang danh sách
     }
+
+
 
 
     @GetMapping("/delete")
-    public String deleteTechnology(@RequestParam int id) {
+    public String deleteTechnology(@RequestParam int id, Model model) {
         technologyService.deleteTechnology(id);
-        return "redirect:/admin/technologies";
+        String message = "Xóa công nghệ thành công!";
+
+        // Load lại danh sách
+        List<TechnologyDTO> technologies = technologyService.getAllTechnologies(1, Integer.MAX_VALUE);
+        model.addAttribute("technologies", technologies);
+        model.addAttribute("message", message);
+        model.addAttribute("currentPage", 1);
+        model.addAttribute("totalPages", 1);
+        return "admin/technology"; // không redirect
     }
+
 }

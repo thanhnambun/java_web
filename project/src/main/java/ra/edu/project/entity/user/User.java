@@ -21,7 +21,9 @@ public class User  {
 
     private String username;
     private String password;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @PrePersist
     public void prePersist() {

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ra.edu.project.entity.technology.Technology;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -34,9 +34,14 @@ public class RecruitmentPositionDTO {
     @Min(value = 0, message = "Kinh nghiệm tối thiểu không được âm")
     private int minExperience;
 
-    @NotNull(message = "Ngày hết hạn không được để trống")
-    @FutureOrPresent(message = "Ngày hết hạn phải từ hôm nay trở đi")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày hết hạn không được để trống!")
+    @FutureOrPresent(message = "Ngày hết hạn phải là hiện tại hoặc tương lai!")
     private LocalDate expiredDate;
 
-    private List<Technology> technologies;
+    private List<String> technologies;
+
+    // ✅ Thêm thuộc tính ngày tạo để hiển thị trong bảng
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdDate;
 }

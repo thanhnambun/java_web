@@ -2,9 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Intern SHIP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        .banner {
+            background: linear-gradient(to right, #c00, #a00);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .job-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #fff;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            border: 2px solid red !important;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+        }
+    </style>
 </head>
 <body>
-111111111122222
+
+<!-- Navbar -->
+<div th:replace="user/navbar.html"></div>
+
+<!-- Banner -->
+<section class="banner">
+    <h1 class="display-4 fw-bold">Intern SHIP</h1>
+    <p class="lead">Practical experience, breakthrough technology potential</p>
+    <p>Join the internship program to learn from experience, strengthen core skills, and prepare for a bright future
+        career.</p>
+    <div class="row justify-content-center mt-4 g-2">
+        <div class="col-12 col-md-3">
+            <input type="text" class="form-control" placeholder="Enter job title...">
+        </div>
+        <div class="col-12 col-md-3">
+            <select class="form-select">
+                <option>Select category</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-2">
+            <button class="btn btn-dark w-100">Search</button>
+        </div>
+    </div>
+</section>
+
+<!-- Job List -->
+<div class="container my-5">
+    <!-- The best position for you -->
+    <div class="mb-4">
+        <h4><span class="text-danger fw-bold">The best position</span> <span class="fw-semibold">for you</span></h4>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4" th:each="pos : ${positions}">
+            <a th:href="@{'/user/home/detail/' + ${pos.id}}" class="text-decoration-none text-dark">
+                <div class="card border">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+                            <i class="bi bi-box-arrow-up-right fs-5"></i>
+                        </div>
+                        <h6 class="fw-bold mt-3" th:text="${pos.name}">Tên vị trí</h6>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <span class="badge bg-light text-primary border" th:each="tech : ${pos.technologies}"
+                                  th:text="${tech}">Tech</span>
+                            <span th:text="${pos.expiredDate}"></span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+<div th:replace="user/footer.html"></div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

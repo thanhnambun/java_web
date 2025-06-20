@@ -69,7 +69,7 @@
         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
         <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Please enter your email ..." th:field="*{username}" required />
+            <input type="text" class="form-control" placeholder="Please enter your username ..." th:field="*{username}" required autofocus />
             <div th:errors="*{username}" class="text-danger"></div>
         </div>
         <div class="mb-3">

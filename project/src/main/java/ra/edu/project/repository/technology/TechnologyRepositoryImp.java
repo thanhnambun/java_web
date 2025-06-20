@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ra.edu.project.entity.technology.Technology;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -14,6 +15,13 @@ public class TechnologyRepositoryImp implements TechnologyRepository {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Override
+    public List<Technology> findTechnology() {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Technology> query = session.createQuery("FROM Technology", Technology.class);
+        return query.getResultList();
+    }
 
     @Override
     public boolean saveTechnology(Technology technology) {
@@ -105,5 +113,27 @@ public class TechnologyRepositoryImp implements TechnologyRepository {
                 .setParameter("techId", technology.getId())
                 .uniqueResult();
         return count.intValue();
+    }
+
+    @Override
+    public List<Technology> findByNameIn(List<String> names) {
+        if (names == null || names.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Session session = sessionFactory.getCurrentSession();
+
+        String hql = "FROM Technology t WHERE t.name IN (:names)";
+        Query<Technology> query = session.createQuery(hql, Technology.class);
+        query.setParameter("names", names);
+
+        return query.getResultList();
+    }
+    public List<Technology> findAllByIds(List<Integer> ids) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Technology> query = session.createQuery("FROM Technology WHERE id IN :ids", Technology.class);
+            query.setParameter("ids", ids);
+            return query.list();
+        }
     }
 }

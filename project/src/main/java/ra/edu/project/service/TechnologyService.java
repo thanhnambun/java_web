@@ -9,6 +9,7 @@ import ra.edu.project.entity.technology.Status;
 import ra.edu.project.entity.technology.Technology;
 import ra.edu.project.repository.technology.TechnologyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,10 @@ public class TechnologyService {
         return technologies.stream()
                 .map(tech -> modelMapper.map(tech, TechnologyDTO.class))
                 .collect(Collectors.toList());
+    }
+    @Transactional
+    public int findByExactName(String name){
+        return technologyRepository.findByExactName(name).getId();
     }
 
 
@@ -54,6 +59,14 @@ public class TechnologyService {
             return false;
         }
         return technologyRepository.updateTechnology(technology);
+    }
+        @Transactional
+    public List<String> getAllTechnologyNames() {
+        return technologyRepository.findTechnology()
+                .stream()
+                .map(Technology::getName)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     @Transactional

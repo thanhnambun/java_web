@@ -10,6 +10,7 @@ import ra.edu.project.validation.*;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,16 +18,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ApplicationDTO {
     private int id;
-
-    @Min(value = 1, message = "ID ứng viên phải lớn hơn 0", groups = {
-            OnPending.class, OnHandling.class, OnInterviewing.class, OnDone.class, OnReject.class, OnCancel.class
-    })
-    private int candidateId;
+    private String candidateName;
 
     @Min(value = 1, message = "ID vị trí tuyển dụng phải lớn hơn 0", groups = {
             OnPending.class, OnHandling.class, OnInterviewing.class, OnDone.class, OnReject.class, OnCancel.class
     })
-    private int recruitmentPositionId;
+    private String recruitmentPosition;
+    private List<String> technologyList;
 
     @NotBlank(message = "URL CV không được để trống", groups = {
             OnPending.class, OnHandling.class, OnInterviewing.class, OnDone.class, OnReject.class, OnCancel.class
@@ -69,4 +67,19 @@ public class ApplicationDTO {
     @NotBlank(message = "Lý do hủy không được để trống", groups = {OnReject.class, OnCancel.class})
     @Size(max = 1000, message = "Lý do hủy không được vượt quá 1000 ký tự", groups = {OnReject.class, OnCancel.class})
     private String destroyReason;
+    private String interviewResult;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    // ✅ Đặt đúng chỗ bên trong class
+    public String getProgressClass() {
+        if (progress == null) return "bg-secondary";
+        switch (progress) {
+            case PENDING: return "bg-warning";
+            case HANDLING: return "bg-primary";
+            case INTERVIEWING: return "bg-info";
+            case DONE: return "bg-success";
+            default: return "bg-secondary";
+        }
+    }
 }

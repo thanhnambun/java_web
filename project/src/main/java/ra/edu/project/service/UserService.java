@@ -9,13 +9,17 @@ import ra.edu.project.dto.RegistrationDTO;
 import ra.edu.project.dto.UserDTO;
 import ra.edu.project.dto.CandidateDTO;
 import ra.edu.project.entity.candidate.Candidate;
+import ra.edu.project.entity.technology.Technology;
+import ra.edu.project.entity.user.Status;
 import ra.edu.project.entity.user.User;
 import ra.edu.project.repository.candidate.CandidateRepositoryImp;
+import ra.edu.project.repository.technology.TechnologyRepositoryImp;
 import ra.edu.project.repository.user.UserRepositoryImp;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.ArrayList;
@@ -32,6 +36,9 @@ public class UserService {
     private CandidateRepositoryImp candidateRepositoryImp;
 
     @Autowired
+    private TechnologyService technologyService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -41,7 +48,6 @@ public class UserService {
     public List<String> register(RegistrationDTO registrationDTO) {
         List<String> errors = new ArrayList<>();
 
-        // Validate UserDTO
         Set<ConstraintViolation<UserDTO>> userViolations = validator.validate(registrationDTO.getUserDTO());
         userViolations.forEach(v -> errors.add(v.getMessage()));
 
@@ -63,53 +69,73 @@ public class UserService {
 
         Candidate candidate = modelMapper.map(registrationDTO.getCandidateDTO(), Candidate.class);
         candidate.setId(user.getId());
+        candidate.setUser(user);
+
+        List<String> techNames = registrationDTO.getCandidateDTO().getTechnologies();
+        List<Technology> techList = new ArrayList<>();
+        for (String techName : techNames) {
+            Integer techId = technologyService.findByExactName(techName);
+            Technology technology = new Technology();
+            technology.setId(techId);
+            techList.add(technology);
+        }
+        candidate.setTechnologies(techList);
         candidateRepositoryImp.save(candidate);
 
         return null;
     }
 
     @Transactional
-    public User login(String username, String password, HttpServletResponse response, boolean rememberMe) {
-        User user = userRepositoryImp.findByUsername(username);
-        if (user != null && BCrypt.checkpw(password, user.getPassword())) {
-            // Lưu username và role vào cookie
-            Cookie usernameCookie = new Cookie("username", user.getUsername());
-            Cookie roleCookie = new Cookie("role", user.getRole().toString());
-            usernameCookie.setPath("/");
-            roleCookie.setPath("/");
+    public User login(String username, String password,
+                      HttpServletRequest request,
+                      HttpServletResponse response,
+                      boolean rememberMe) {
 
-            if (rememberMe) {
-                // Lưu trong 7 ngày
-                usernameCookie.setMaxAge(1 * 24 * 60 * 60);
-                roleCookie.setMaxAge(1 * 24 * 60 * 60);
-            } else {
-                usernameCookie.setMaxAge(-1);
-                roleCookie.setMaxAge(-1);
+        User user = userRepositoryImp.findByUsername(username);
+
+        if (user != null) {
+            if (user.getStatus().name().equalsIgnoreCase(Status.INACTIVE.name())) {
+                throw new RuntimeException("Tài khoản của bạn đã bị khóa.");
             }
 
-            response.addCookie(usernameCookie);
-            response.addCookie(roleCookie);
+            if (BCrypt.checkpw(password, user.getPassword())) {
+                // Lưu cookie username (rememberMe)
+                Cookie usernameCookie = new Cookie("username", user.getUsername());
+                usernameCookie.setPath("/");
 
-            return user;
+                if (rememberMe) {
+                    usernameCookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
+                } else {
+                    usernameCookie.setMaxAge(-1);
+                }
+                response.addCookie(usernameCookie);
+
+                HttpSession session = request.getSession(true);
+                session.setAttribute("role", user.getRole().name());
+                session.setAttribute("user", user);
+
+                return user;
+            }
         }
         return null;
     }
 
 
-
-
-    public void logout(HttpServletResponse response) {
+    @Transactional
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        // Xóa cookie username
         Cookie usernameCookie = new Cookie("username", null);
-        Cookie roleCookie = new Cookie("role", null);
         usernameCookie.setMaxAge(0);
-        roleCookie.setMaxAge(0);
         usernameCookie.setPath("/");
-        roleCookie.setPath("/");
-
         response.addCookie(usernameCookie);
-        response.addCookie(roleCookie);
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
     }
 
+    @Transactional
     public String getCurrentUsername(HttpServletRequest request) {
         for (Cookie cookie : request.getCookies()) {
             if ("username".equals(cookie.getName())) {
@@ -118,7 +144,7 @@ public class UserService {
         }
         return null;
     }
-
+    @Transactional
     public String getCurrentUserRole(HttpServletRequest request) {
         for (Cookie cookie : request.getCookies()) {
             if ("role".equals(cookie.getName())) {
@@ -132,9 +158,8 @@ public class UserService {
     public User getUserById(int id) {
         return userRepositoryImp.getUserById(id);
     }
-
     @Transactional
-    public int updateUserStatus(int id, String status) {
-        return userRepositoryImp.updateStatus(id, status);
+    public User getUserByUsername(String username) {
+        return userRepositoryImp.findByUsername(username);
     }
 }

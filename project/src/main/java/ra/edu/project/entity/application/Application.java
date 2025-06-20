@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ra.edu.project.entity.candidate.Candidate;
+import ra.edu.project.entity.recruitmentPosition.RecruitmentPosition;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,11 +19,11 @@ public class Application  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int candidateId;
-    private int recruitmentPositionId;
     private String cvUrl;
+    @Enumerated(EnumType.STRING)
     private Progress progress;
     private LocalDateTime interviewRequestDate;
+    @Enumerated(EnumType.STRING)
     private RequestResult interviewRequestResult;
     private String interviewLink;
     private LocalDateTime interviewTime;
@@ -33,7 +34,11 @@ public class Application  {
     private LocalDateTime updateAt;
     private String destroyReason;
     @ManyToOne
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+    @OneToOne
+    @JoinColumn(name = "recruitmentPosition_id")
+    private RecruitmentPosition recruitmentPosition;
 
 
     @PrePersist

@@ -5,6 +5,7 @@ import ra.edu.project.entity.technology.Technology;
 import java.util.List;
 
 public interface TechnologyRepository {
+    List<Technology> findTechnology();
     boolean saveTechnology(Technology technology);
     boolean deleteTechnology(Technology technology);
     boolean updateTechnology(Technology technology);
@@ -14,4 +15,7 @@ public interface TechnologyRepository {
     Technology findByExactName(String name);
     int checkTechnologyByCandidate(Technology technology);
     int checkTechnologyByRecruitmentPosition(Technology technology);
+    List<Technology> findByNameIn(List<String> names);
+    List<Technology> findAllByIds(List<Integer> ids);
+
 }

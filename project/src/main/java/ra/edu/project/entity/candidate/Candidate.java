@@ -20,17 +20,21 @@ public class Candidate {
     private String email;
     private String phone;
     private int experience;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private String description;
     private LocalDate dob;
 
     @OneToMany(mappedBy = "candidate")
     private List<Application> applications;
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "candidate_technology",
             joinColumns = @JoinColumn(name = "candidate_id"),
             inverseJoinColumns = @JoinColumn(name = "technology_id")
     )
     private List<Technology> technologies;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

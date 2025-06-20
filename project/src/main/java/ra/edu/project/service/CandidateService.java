@@ -5,10 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ra.edu.project.dto.CandidateDTO;
 import ra.edu.project.entity.candidate.Candidate;
+import ra.edu.project.entity.candidate.Gender;
+import ra.edu.project.entity.technology.Technology;
+import ra.edu.project.entity.user.Status;
+import ra.edu.project.entity.user.User;
 import ra.edu.project.repository.candidate.CandidateRepositoryImp;
-import org.modelmapper.ModelMapper;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,53 +23,72 @@ public class CandidateService {
     private CandidateRepositoryImp candidateRepositoryImp;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private UserService userService;
+
+    @Transactional(readOnly = true)
+    public List<CandidateDTO> getAllCandidates(int page, int pageSize) {
+        List<Candidate> candidates = candidateRepositoryImp.getCandidates(page, pageSize);
+        return candidates.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
-    public boolean changePassword(Integer userId, String oldPassword, String newPassword, String phone) {
-        return candidateRepositoryImp.changePassword(userId, oldPassword, newPassword, phone) > 0;
+    public List<CandidateDTO> filterCandidates(String name, Integer experience, Integer age, String gender, String technology,
+                                               int pageNumber, int pageSize) {
+        List<Object[]> results = candidateRepositoryImp.findCandidateWithAllConditions(
+                name, experience, gender, technology, pageNumber, pageSize
+        );
+
+        Map<Integer, CandidateDTO> dtoMap = new HashMap<>();
+
+        for (Object[] row : results) {
+            int candidateId = (Integer) row[0];
+            CandidateDTO dto = dtoMap.get(candidateId);
+
+            if (dto == null) {
+                dto = new CandidateDTO();
+                dto.setId(candidateId);
+                dto.setName((String) row[1]);
+                dto.setEmail((String) row[2]);
+                dto.setPhone((String) row[3]);
+                dto.setExperience((Integer) row[4]);
+                dto.setGender((Gender) row[5]);
+                dto.setDescription((String) row[6]);
+                dto.setDob((LocalDate) row[7]);
+
+                Status status = (Status) row[8];
+                if (status != null) {
+                    dto.setStatus(status.name());
+                }
+
+                dto.setTechnologies(new ArrayList<>());
+                dtoMap.put(candidateId, dto);
+            }
+
+            String techName = (String) row[9];
+            dto.getTechnologies().add(techName);
+        }
+
+        List<CandidateDTO> finalList = new ArrayList<>(dtoMap.values());
+        if (age != null) {
+            finalList = finalList.stream()
+                    .filter(dto -> {
+                        if (dto.getDob() == null) return false;
+                        int calculatedAge = Period.between(dto.getDob(), LocalDate.now()).getYears();
+                        return calculatedAge == age;
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        return finalList;
     }
 
-
-    @Transactional(readOnly = true)
-    public List<CandidateDTO> searchByName(String name, int pageNumber, int pageSize) {
-        List<Candidate> candidates = candidateRepositoryImp.searchByName(name, pageNumber, pageSize);
-        return candidates.stream()
-                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
-                .collect(Collectors.toList());
+    @Transactional
+    public int countFilteredCandidates(String name, Integer experience, Integer age, String gender, String technology){
+        return candidateRepositoryImp.countFilteredCandidates(name, experience, age, gender, technology);
     }
 
-    @Transactional(readOnly = true)
-    public List<CandidateDTO> filterByExperience(int experience, int pageNumber, int pageSize) {
-        List<Candidate> candidates = candidateRepositoryImp.filterByExperience(experience, pageNumber, pageSize);
-        return candidates.stream()
-                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<CandidateDTO> filterByAge(int age, int pageNumber, int pageSize) {
-        List<Candidate> candidates = candidateRepositoryImp.filterByAge(age, pageNumber, pageSize);
-        return candidates.stream()
-                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<CandidateDTO> filterByGender(String gender, int pageNumber, int pageSize) {
-        List<Candidate> candidates = candidateRepositoryImp.filterByGender(gender, pageNumber, pageSize);
-        return candidates.stream()
-                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<CandidateDTO> filterByTechnology(String technology, int pageNumber, int pageSize) {
-        List<Candidate> candidates = candidateRepositoryImp.filterByTechnology(technology, pageNumber, pageSize);
-        return candidates.stream()
-                .map(candidate -> modelMapper.map(candidate, CandidateDTO.class))
-                .collect(Collectors.toList());
-    }
 
     @Transactional
     public boolean resetPassword(int userId, String newPassword) {
@@ -74,36 +98,41 @@ public class CandidateService {
     @Transactional(readOnly = true)
     public CandidateDTO getCandidateById(int userId) {
         Candidate candidate = candidateRepositoryImp.getCandidateById(userId);
-        return candidate != null ? modelMapper.map(candidate, CandidateDTO.class) : null;
+        return candidate != null ? convertToDTO(candidate) : null;
     }
 
-    @Transactional(readOnly = true)
-    public int getTotalCandidatesCount() {
-        return candidateRepositoryImp.getTotalCandidatesCount();
+    @Transactional
+    public boolean changeStatus(int userId, Status status) {
+        return candidateRepositoryImp.changeStatus(userId, status) > 0;
     }
 
+    @Transactional
+    public Candidate getCandidateByUserid(int userId) {
+        return candidateRepositoryImp.findById(userId);
+    }
     @Transactional(readOnly = true)
-    public int getTotalCandidatesByName(String name) {
-        return candidateRepositoryImp.getTotalCandidatesByName(name);
+    public CandidateDTO convertToDTO(Candidate candidate) {
+        CandidateDTO dto = new CandidateDTO();
+        dto.setId(candidate.getId());
+        dto.setName(candidate.getName());
+        dto.setEmail(candidate.getEmail());
+        dto.setPhone(candidate.getPhone());
+        dto.setExperience(candidate.getExperience());
+        dto.setGender(candidate.getGender());
+        dto.setDescription(candidate.getDescription());
+        dto.setDob(candidate.getDob());
+
+        if (candidate.getUser() != null && candidate.getUser().getStatus() != null) {
+            dto.setStatus(candidate.getUser().getStatus().name());
+        }
+
+        List<String> technologyNames = candidate.getTechnologies()
+                .stream()
+                .map(Technology::getName)
+                .collect(Collectors.toList());
+        dto.setTechnologies(technologyNames);
+
+        return dto;
     }
 
-    @Transactional(readOnly = true)
-    public int getTotalCandidatesByExperience(int experience) {
-        return candidateRepositoryImp.getTotalCandidatesByExperience(experience);
-    }
-
-    @Transactional(readOnly = true)
-    public int getTotalCandidatesByAge(int age) {
-        return candidateRepositoryImp.getTotalCandidatesByAge(age);
-    }
-
-    @Transactional(readOnly = true)
-    public int getTotalCandidatesByGender(String gender) {
-        return candidateRepositoryImp.getTotalCandidatesByGender(gender);
-    }
-
-    @Transactional(readOnly = true)
-    public int getTotalCandidatesByTechnology(String technology) {
-        return candidateRepositoryImp.getTotalCandidatesByTechnology(technology);
-    }
 }

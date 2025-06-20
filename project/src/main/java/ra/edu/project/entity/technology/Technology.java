@@ -21,16 +21,13 @@ public class Technology {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Status status;
+    //    @ManyToMany(mappedBy = "technologies")
+//    private List<Candidate>candidates;
     @ManyToMany(mappedBy = "technologies")
-    private List<Candidate>candidates;
-    @ManyToMany
-    @JoinTable(
-            name = "recruitmentPositions_technology",
-            joinColumns = @JoinColumn(name = "technology_id"),
-            inverseJoinColumns = @JoinColumn(name = "recruitment_position_id")
-    )
     private List<RecruitmentPosition> recruitmentPositions;
+
     @PrePersist
     public void prePersist() {
         status = Status.ACTIVE;

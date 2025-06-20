@@ -41,15 +41,13 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public User getUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Candidate c join c.user u where u.id = :id ");
         return session.get(User.class, id);
     }
 
     @Override
-    public int updateStatus(int id, String newStatus) {
+    public void  update(User user) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("UPDATE User u SET u.status = :status WHERE u.id = :id");
-        query.setParameter("status", newStatus);
-        query.setParameter("id", id);
-        return query.executeUpdate();
+        session.update(user);
     }
 }

@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ra.edu.project.entity.candidate.Gender;
+import ra.edu.project.entity.user.Status;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,4 +44,7 @@ public class CandidateDTO {
     @Past(message = "Ngày sinh phải là ngày trong quá khứ")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
+    private String status;
+    @NotEmpty(message = "Vui lòng chọn ít nhất một công nghệ")
+    private List<String> technologies;
 }
