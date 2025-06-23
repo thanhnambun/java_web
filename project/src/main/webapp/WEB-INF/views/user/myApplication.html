@@ -15,19 +15,40 @@
             text-align: center;
         }
 
-        .badge-orange { background-color: #f7b731; color: #000; }
-        .badge-blue { background-color: #a29bfe; color: #fff; }
-        .badge-cyan { background-color: #81ecec; color: #000; }
-        .badge-green { background-color: #55efc4; color: #000; }
+        .badge-orange {
+            background-color: #f7b731;
+            color: #000;
+        }
 
-        .table thead { background-color: #e9ecef; }
+        .badge-blue {
+            background-color: #a29bfe;
+            color: #fff;
+        }
+
+        .badge-cyan {
+            background-color: #81ecec;
+            color: #000;
+        }
+
+        .badge-green {
+            background-color: #55efc4;
+            color: #000;
+        }
+
+        .table thead {
+            background-color: #e9ecef;
+        }
 
         .application-title {
             font-size: 28px;
             font-weight: bold;
             color: #000;
         }
-        .application-title span { color: red; }
+
+        .application-title span {
+            color: red;
+        }
+
         footer {
             text-align: center;
             font-size: 14px;
@@ -46,6 +67,7 @@
     </div>
 
     <div class="table-responsive shadow-sm">
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -67,12 +89,13 @@
                        th:text="${app.recruitmentPosition}"></a>
                 </td>
                 <td>
-                    <span th:each="tech : ${app.getTechnologyList()}" class="badge bg-warning text-dark me-1" th:text="${tech}">Tech</span>
+                    <span th:each="tech : ${app.getTechnologyList()}" class="badge bg-warning text-dark me-1"
+                          th:text="${tech}">Tech</span>
                 </td>
                 <td th:text="${app.createdAt}"></td>
                 <td th:text="${app.updatedAt}"></td>
                 <td>
-                    <span th:switch="${app.progress}">
+                    <span th:switch="${app.getProgress().name()}">
                         <span th:case="'PENDING'" class="badge badge-orange">PENDING</span>
                         <span th:case="'HANDLING'" class="badge badge-blue">HANDLING</span>
                         <span th:case="'INTERVIEWING'" class="badge badge-cyan">INTERVIEWING</span>
@@ -81,8 +104,9 @@
                     </span>
                 </td>
                 <td>
-                    <span th:if="${app.interviewRequestResult == null}">Chưa có kết quả</span>
-                    <span th:if="${app.interviewRequestResult != null}" th:text="${app.interviewRequestResult}"></span>
+                    <span th:if="${app.getInterviewRequestResult() == null}">Chưa có kết quả</span>
+                    <span th:if="${app.getInterviewRequestResult() != null}"
+                          th:text="${app.interviewRequestResult}"></span>
                 </td>
                 <td>
 
@@ -90,16 +114,19 @@
                             class="btn btn-sm btn-success"
                             data-bs-toggle="modal"
                             data-bs-target="#confirmModal"
-                            th:if="${app.progress == 'INTERVIEWING'}"
+                            th:if="${app.getProgress().name() == 'INTERVIEWING'}"
                             th:attr="data-id=${app.id},
-                     data-created=${app.createdAt},
-                     data-updated=${app.updatedAt},
-                     data-interview=${app.interviewRequestDate},
-                     data-link=${app.interviewLink}">
-                        <i class="bi bi-check-circle"></i> Confirm
+                    data-created=${app.createdAt},
+                    data-updated=${app.updatedAt},
+                    data-interview=${app.interviewRequestDate},
+                    data-link=${app.interviewLink}">
+                    <i class="bi bi-check-circle"></i> Confirm
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" th:attr="data-id=${app.id}"
+                            onclick="openCancelModal(this)">
+                        <i class="bi bi-trash"></i>
                     </button>
                 </td>
-
 
             </tr>
             </tbody>
@@ -155,6 +182,29 @@
     </div>
 </div>
 
+<div class="modal fade" id="cancelModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" th:action="@{/user/myApplication/cancel}">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hủy đơn ứng tuyển</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" name="applicationId" id="cancelAppId">
+
+                    <label for="cancelReason">Lý do hủy:</label>
+                    <textarea id="cancelReason" name="reason" class="form-control mb-2" placeholder="Nhập lý do hủy" required></textarea>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Xác nhận hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div th:replace="user/footer.html"></div>
 
@@ -177,6 +227,11 @@
         const form = document.getElementById('confirmForm');
         form.action = `/user/myApplication/${id}/confirm`;
     });
+    function openCancelModal(el) {
+        const appId = $(el).data('id');
+        $('#cancelAppId').val(appId);
+        new bootstrap.Modal(document.getElementById('cancelModal')).show();
+    }
 </script>
 
 

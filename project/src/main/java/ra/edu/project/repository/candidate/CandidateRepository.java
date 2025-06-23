@@ -37,4 +37,5 @@ public interface CandidateRepository {
     int getTotalCandidatesByTechnology(String technology); // Thêm để lấy tổng số ứng viên theo công nghệ
     void updateCandidate(Candidate candidate);
     Candidate getCandidateByUserId(int id );
+    Candidate findByEmailAndPhone(String email, String phone);
 }

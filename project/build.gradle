@@ -38,6 +38,8 @@ dependencies {
 
     // JPA API
     implementation 'javax.persistence:javax.persistence-api:2.2'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
 
     // MySQL JDBC Driver
     runtimeOnly 'mysql:mysql-connector-java:8.0.33'
@@ -47,6 +49,8 @@ dependencies {
     implementation "org.springframework:spring-context:${springVersion}"
     implementation "org.springframework:spring-beans:${springVersion}"
     implementation "org.springframework:spring-context-support:${springVersion}"
+//    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 
     // Spring Web / MVC / ORM
     implementation "org.springframework:spring-web:${springVersion}"

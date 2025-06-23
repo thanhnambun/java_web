@@ -134,5 +134,16 @@ public class CandidateService {
 
         return dto;
     }
-
+    @Transactional
+    public boolean checkEmail(String email,int candidateId) {
+        return candidateRepositoryImp.checkEmail(email,candidateId);
+    }
+    @Transactional
+    public boolean checkPhone(String phone,int candidateId) {
+        return candidateRepositoryImp.checkPhone(phone,candidateId);
+    }
+    @Transactional
+    public Candidate findByEmailAndPhone(String email, String phone) {
+        return candidateRepositoryImp.findByEmailAndPhone(email, phone);
+    }
 }

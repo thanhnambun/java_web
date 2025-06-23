@@ -43,6 +43,7 @@
 <!-- Content -->
 <div class="content">
     <h4 class="mb-4"><i class="bi bi-journal-text me-2"></i>Application Management</h4>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
 
     <!-- Filter -->
     <form class="d-flex mb-3" method="get" action="#" th:action="@{/admin/application}">
@@ -94,6 +95,7 @@
             <td th:text="${app.createdAt}"></td>
             <td th:text="${app.updatedAt}"></td>
             <td th:classappend="${app.getProgressClass()}">[[${app.progress}]]</td>
+            <td th:text="${app.getInterviewRequestResult()}"></td>
             <td>
                 <div class="d-flex gap-2">
                     <button class="btn btn-sm btn-outline-primary" th:attr="data-id=${app.id}"
@@ -162,16 +164,15 @@
                     <input type="hidden" name="applicationId" id="interviewAppId">
 
                     <!-- Ngày yêu cầu phỏng vấn -->
-                    <label for="interviewRequestDate">Ngày yêu cầu phỏng vấn:</label>
-                    <input type="date" id="interviewRequestDate" name="interviewRequestDate" required class="form-control mb-2">
+                    <!-- Ngày & Thời gian phỏng vấn (gộp) -->
+                    <label for="interviewDateTime">Ngày và thời gian phỏng vấn:</label>
+                    <input type="datetime-local" id="interviewDateTime" name="interviewDateTime" required class="form-control mb-2">
+
 
                     <!-- Link phỏng vấn -->
                     <label for="interviewLink">Link phỏng vấn:</label>
                     <input type="text" id="interviewLink" name="interviewLink" placeholder="Link phỏng vấn" required class="form-control mb-2">
 
-                    <!-- Thời gian phỏng vấn -->
-                    <label for="interviewTime">Thời gian phỏng vấn:</label>
-                    <input type="datetime-local" id="interviewTime" name="interviewTime" placeholder="Thời gian phỏng vấn" required class="form-control mb-2">
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Gửi thông tin phỏng vấn</button>

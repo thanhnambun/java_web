@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -55,8 +57,19 @@ public class UserService {
         candidateViolations.forEach(v -> errors.add(v.getMessage()));
 
         User existingUser = userRepositoryImp.findByUsername(registrationDTO.getUserDTO().getUsername());
+        if(candidateRepositoryImp.checkPhone(registrationDTO.getCandidateDTO().getPhone(),registrationDTO.getCandidateDTO().getId())){
+            errors.add("số điện thoại này đã tồn tại ");
+        }
+        if(candidateRepositoryImp.checkEmail(registrationDTO.getCandidateDTO().getEmail(),registrationDTO.getCandidateDTO().getId())){
+            errors.add("Email đã tồn tại ");
+        }
+        int age = Period.between(registrationDTO.getCandidateDTO().getDob(), LocalDate.now()).getYears();
+
+        if(registrationDTO.getCandidateDTO().getExperience()>age){
+            errors.add("Năm kinh nghiệm phải nhỏ hơn tuôổi ");
+        }
         if (existingUser != null) {
-            errors.add("Username already exists");
+            errors.add("Username đã tồn tại ");
         }
 
         if (!errors.isEmpty()) {
@@ -99,12 +112,11 @@ public class UserService {
             }
 
             if (BCrypt.checkpw(password, user.getPassword())) {
-                // Lưu cookie username (rememberMe)
                 Cookie usernameCookie = new Cookie("username", user.getUsername());
                 usernameCookie.setPath("/");
 
                 if (rememberMe) {
-                    usernameCookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
+                    usernameCookie.setMaxAge(7 * 24 * 60 * 60);
                 } else {
                     usernameCookie.setMaxAge(-1);
                 }
@@ -123,7 +135,6 @@ public class UserService {
 
     @Transactional
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        // Xóa cookie username
         Cookie usernameCookie = new Cookie("username", null);
         usernameCookie.setMaxAge(0);
         usernameCookie.setPath("/");
@@ -134,20 +145,21 @@ public class UserService {
             session.invalidate();
         }
     }
-
+    @Transactional
+    public boolean updatePassword(int userId, String newPassword) {
+        User user = userRepositoryImp.getUserById(userId);
+        if (user != null) {
+            String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+            user.setPassword(hashedPassword);
+            userRepositoryImp.update(user);
+            return true;
+        }
+        return false;
+    }
     @Transactional
     public String getCurrentUsername(HttpServletRequest request) {
         for (Cookie cookie : request.getCookies()) {
             if ("username".equals(cookie.getName())) {
-                return cookie.getValue();
-            }
-        }
-        return null;
-    }
-    @Transactional
-    public String getCurrentUserRole(HttpServletRequest request) {
-        for (Cookie cookie : request.getCookies()) {
-            if ("role".equals(cookie.getName())) {
                 return cookie.getValue();
             }
         }
@@ -162,4 +174,5 @@ public class UserService {
     public User getUserByUsername(String username) {
         return userRepositoryImp.findByUsername(username);
     }
+
 }

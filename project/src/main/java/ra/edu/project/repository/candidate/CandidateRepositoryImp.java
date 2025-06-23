@@ -259,6 +259,19 @@ public class CandidateRepositoryImp implements CandidateRepository {
         query.setParameter("id_in", id_in);
         return query.uniqueResult();
     }
+    @Override
+    public Candidate findByEmailAndPhone(String email, String phone) {
+        Session session = sessionFactory.openSession();
+        try {
+            return session.createQuery("FROM Candidate WHERE email = :email AND phone = :phone", Candidate.class)
+                    .setParameter("email", email)
+                    .setParameter("phone", phone)
+                    .uniqueResult();
+        } finally {
+            session.close();
+        }
+    }
+
 
 
     @Override

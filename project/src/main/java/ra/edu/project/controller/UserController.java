@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ra.edu.project.dto.RegistrationDTO;
 import ra.edu.project.dto.UserDTO;
 import ra.edu.project.dto.CandidateDTO;
+import ra.edu.project.entity.candidate.Candidate;
 import ra.edu.project.entity.user.User;
 import ra.edu.project.entity.user.UserRole;
+import ra.edu.project.service.CandidateService;
 import ra.edu.project.service.CandidateTechnologyService;
 import ra.edu.project.service.TechnologyService;
 import ra.edu.project.service.UserService;
@@ -32,6 +34,8 @@ public class UserController {
     private TechnologyService technologyService;
     @Autowired
     private CandidateTechnologyService candidateTechnologyService;
+    @Autowired
+    private CandidateService candidateService;
 
 
     @GetMapping("/")
@@ -107,9 +111,11 @@ public class UserController {
 
         List<String> errors = userService.register(registrationDTO);
         if (errors == null) {
+
             return "redirect:/login";
         }
-
+        List<String> technologyNames = technologyService.getAllTechnologyNames();
+        model.addAttribute("technologyList", technologyNames);
         model.addAttribute("errors", errors);
         return "register";
     }
@@ -120,4 +126,5 @@ public class UserController {
         userService.logout(request, response);
         return "redirect:/login";
     }
+
 }

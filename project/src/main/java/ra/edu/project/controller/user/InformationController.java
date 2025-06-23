@@ -88,7 +88,7 @@ public class InformationController {
         return "user/information";
     }
 
-    // Đổi mật khẩu
+
     @PostMapping("/change-password")
     public String changePassword(@RequestParam("oldPassword") String oldPassword,
                                  @RequestParam("newPassword") String newPassword,

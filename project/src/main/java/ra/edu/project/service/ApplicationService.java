@@ -36,6 +36,7 @@ public class ApplicationService {
         applicationRepository.cancelApplication(id, reason);
     }
 
+
     @Transactional
     public void updateProgressToHandling(int id) {
         applicationRepository.updateProgressToHandling(id);
