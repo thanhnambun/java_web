@@ -3,12 +3,17 @@ package ra.edu.project.controller.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import ra.edu.project.dto.ApplicationDTO;
 import ra.edu.project.entity.application.Application;
 import ra.edu.project.entity.application.Progress;
 import ra.edu.project.service.ApplicationService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +88,41 @@ public class AdminApplicationController {
 
     @PostMapping("/interview")
     public String updateInterviewInfo(@RequestParam("applicationId") int id,
-                                      @RequestParam("interviewRequestDate") String date,
+                                      @RequestParam("interviewRequestDate") String dateStr,
                                       @RequestParam("interviewLink") String link,
-                                      @RequestParam("interviewTime") String time) {
-        applicationService.updateInterviewInfo(id, date, link, time);
+                                      @RequestParam("interviewTime") String timeStr) {
+
+        // Định dạng input type="date" và "datetime-local" từ HTML
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // cho input date
+        DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"); // cho datetime-local
+
+        LocalDateTime interviewRequestDate = null;
+        LocalDateTime interviewTime = null;
+
+        try {
+            // Convert interviewRequestDate (type="date" -> LocalDateTime)
+            if (StringUtils.hasText(dateStr)) {
+                interviewRequestDate = LocalDate.parse(dateStr, dateFormatter).atStartOfDay();
+            }
+
+            // Convert interviewTime (type="datetime-local" -> LocalDateTime)
+            if (StringUtils.hasText(timeStr)) {
+                interviewTime = LocalDateTime.parse(timeStr, datetimeFormatter);
+            }
+
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            // Nếu có lỗi parse, redirect về trang error hoặc log để fix
+            return "redirect:/error";
+        }
+
+        // Truyền đúng LocalDateTime sang Service (chuẩn theo kiểu Entity)
+        applicationService.updateInterviewInfo(id, interviewRequestDate, link, interviewTime);
+
         return "redirect:/admin/application";
     }
+
+
 
     @PostMapping("/result")
     public String updateInterviewResult(@RequestParam("applicationId") int id,

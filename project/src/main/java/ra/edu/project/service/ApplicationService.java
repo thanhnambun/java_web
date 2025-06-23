@@ -9,6 +9,7 @@ import ra.edu.project.entity.application.Progress;
 import ra.edu.project.entity.application.RequestResult;
 import ra.edu.project.repository.application.ApplicationRepo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class ApplicationService {
     }
 
     @Transactional
-    public void updateInterviewInfo(int id, String interviewRequestDate, String interviewLink, String interviewTime) {
+    public void updateInterviewInfo(int id, LocalDateTime interviewRequestDate, String interviewLink, LocalDateTime interviewTime) {
         applicationRepository.updateInterviewInfo(id, interviewRequestDate, interviewLink, interviewTime);
     }
 

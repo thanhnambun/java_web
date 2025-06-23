@@ -5,6 +5,7 @@ import ra.edu.project.entity.application.Application;
 import ra.edu.project.entity.application.Progress;
 import ra.edu.project.entity.application.RequestResult;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ApplicationRepo {
@@ -21,7 +22,7 @@ public interface ApplicationRepo {
 
     int updateProgress(int id,String progress);
 
-    int updateInterviewInfo(int id, String interviewRequestDate, String interviewLink, String interviewTime);
+    int updateInterviewInfo(int id, LocalDateTime interviewRequestDate, String interviewLink, LocalDateTime interviewTime);
 
     int updateInterviewResult(int id, String interviewResultNote, String interviewResult);
 

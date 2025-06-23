@@ -10,6 +10,8 @@ import ra.edu.project.entity.application.Progress;
 import ra.edu.project.entity.application.RequestResult;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -39,7 +41,7 @@ public class ApplicationRepoImp implements ApplicationRepo {
             query.setParameter("result", result);
         }
 
-        int firstResult = (page <= 0 ? 0 : (page - 1) * pageSize);
+
         query.setFirstResult(page);
         query.setMaxResults(pageSize);
 
@@ -80,9 +82,14 @@ public class ApplicationRepoImp implements ApplicationRepo {
     @Override
     public int cancelApplication(int id, String destroyReason) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("UPDATE Application a SET a.destroyAt = :destroyAt, a.destroyReason = :reason WHERE a.id = :id");
-        query.setParameter("destroyAt", LocalDate.now());
+        Query query = session.createQuery("UPDATE Application a\n" +
+                "        SET a.destroyAt = :destroyAt,\n" +
+                "            a.destroyReason = :reason,\n" +
+                "            a.progress = :progress\n" +
+                "        WHERE a.id = :id");
+        query.setParameter("destroyAt", LocalDateTime.now());
         query.setParameter("reason", destroyReason);
+        query.setParameter("progress", Progress.CANCEL);
         query.setParameter("id", id);
         return query.executeUpdate();
     }
@@ -107,19 +114,26 @@ public class ApplicationRepoImp implements ApplicationRepo {
     }
 
     @Override
-    public int updateInterviewInfo(int id, String interviewRequestDate, String interviewLink, String interviewTime) {
+    public int updateInterviewInfo(int id, LocalDateTime interviewRequestDate, String interviewLink, LocalDateTime interviewTime) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery(
-                "UPDATE Application a SET a.interviewRequestDate = :date, a.interviewLink = :link, " +
-                        "a.interviewTime = :time, a.progress = :progress WHERE a.id = :id"
+                "UPDATE Application a SET a.interviewRequestDate = :interviewRequestDate, " +
+                        "a.interviewLink = :interviewLink, " +
+                        "a.interviewTime = :interviewTime, " +
+                        "a.progress = :progress WHERE a.id = :id"
         );
-        query.setParameter("date", interviewRequestDate);
-        query.setParameter("link", interviewLink);
-        query.setParameter("time", interviewTime);
+
+        query.setParameter("interviewRequestDate", interviewRequestDate);
+        query.setParameter("interviewLink", interviewLink);
+        query.setParameter("interviewTime", interviewTime);
         query.setParameter("progress", Progress.INTERVIEWING);
         query.setParameter("id", id);
+
         return query.executeUpdate();
     }
+
+
+
 
     @Override
     public int updateInterviewResult(int id, String interviewResultNote, String interviewResult) {

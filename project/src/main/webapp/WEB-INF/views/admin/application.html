@@ -154,71 +154,98 @@
         <div class="modal-content">
             <form method="post" th:action="@{/admin/application/interview}">
                 <div class="modal-header">
-                    <h5 class="modal-title">Send Interview Info</h5>
+                    <h5 class="modal-title">Gửi thông tin phỏng vấn</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- ID đơn ứng tuyển (ẩn) -->
                     <input type="hidden" name="applicationId" id="interviewAppId">
-                    <input type="date" name="interviewRequestDate" required class="form-control mb-2">
-                    <input type="text" name="interviewLink" placeholder="Link" required class="form-control mb-2">
-                    <input type="text" name="interviewTime" placeholder="Time" required class="form-control mb-2">
+
+                    <!-- Ngày yêu cầu phỏng vấn -->
+                    <label for="interviewRequestDate">Ngày yêu cầu phỏng vấn:</label>
+                    <input type="date" id="interviewRequestDate" name="interviewRequestDate" required class="form-control mb-2">
+
+                    <!-- Link phỏng vấn -->
+                    <label for="interviewLink">Link phỏng vấn:</label>
+                    <input type="text" id="interviewLink" name="interviewLink" placeholder="Link phỏng vấn" required class="form-control mb-2">
+
+                    <!-- Thời gian phỏng vấn -->
+                    <label for="interviewTime">Thời gian phỏng vấn:</label>
+                    <input type="datetime-local" id="interviewTime" name="interviewTime" placeholder="Thời gian phỏng vấn" required class="form-control mb-2">
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Send Interview Info</button>
+                    <button type="submit" class="btn btn-primary">Gửi thông tin phỏng vấn</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
 
 
 <!-- Cancel Modal -->
 <div class="modal fade" id="cancelModal" tabindex="-1">
     <div class="modal-dialog">
-        <div class="modal-content"> <!-- THÊM -->
+        <div class="modal-content">
             <form method="post" th:action="@{/admin/application/cancel}">
                 <div class="modal-header">
-                    <h5 class="modal-title">Cancel Application</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title">Hủy đơn ứng tuyển</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <input type="hidden" name="applicationId" id="cancelAppId">
-                    <textarea name="reason" class="form-control mb-2" placeholder="Reason" required></textarea>
+
+                    <label for="cancelReason">Lý do hủy:</label>
+                    <textarea id="cancelReason" name="reason" class="form-control mb-2" placeholder="Nhập lý do hủy" required></textarea>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Cancel Application</button>
+                    <button type="submit" class="btn btn-danger">Xác nhận hủy</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
 
 
 <!-- Result Modal -->
 <div class="modal fade" id="resultModal" tabindex="-1">
     <div class="modal-dialog">
-        <div class="modal-content"> <!-- THÊM -->
+        <div class="modal-content">
             <form method="post" th:action="@{/admin/application/result}">
                 <div class="modal-header">
-                    <h5 class="modal-title">Update Result</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title">Cập nhật kết quả phỏng vấn</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
+                    <!-- ID đơn ứng tuyển (ẩn) -->
                     <input type="hidden" name="applicationId" id="resultAppId">
-                    <textarea name="note" class="form-control mb-2" placeholder="Result note" required></textarea>
-                    <select name="result" class="form-select mb-2">
+
+                    <!-- Ghi chú kết quả -->
+                    <label for="resultNote">Ghi chú kết quả:</label>
+                    <textarea id="resultNote" name="note" class="form-control mb-2" placeholder="Nhập ghi chú kết quả" required></textarea>
+
+                    <!-- Kết quả phỏng vấn -->
+                    <label for="resultSelect">Kết quả phỏng vấn:</label>
+                    <select id="resultSelect" name="result" class="form-select mb-2" required>
+                        <option value="">-- Chọn kết quả --</option>
                         <option value="PASS">PASS</option>
                         <option value="FAIL">FAIL</option>
                     </select>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Update Result</button>
+                    <button type="submit" class="btn btn-success">Cập nhật kết quả</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
