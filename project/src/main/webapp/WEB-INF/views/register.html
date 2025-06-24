@@ -86,7 +86,6 @@
               <div th:errors="*{candidateDTO.description}" class="text-danger"></div>
             </div>
 
-            <!-- Phần chọn Technology: checkbox đa lựa chọn -->
             <div class="mb-3">
               <label class="form-label">Technologies</label>
               <div class="form-check" th:each="tech : ${technologyList}">

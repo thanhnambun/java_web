@@ -160,16 +160,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- ID đơn ứng tuyển (ẩn) -->
                     <input type="hidden" name="applicationId" id="interviewAppId">
 
-                    <!-- Ngày yêu cầu phỏng vấn -->
-                    <!-- Ngày & Thời gian phỏng vấn (gộp) -->
                     <label for="interviewDateTime">Ngày và thời gian phỏng vấn:</label>
                     <input type="datetime-local" id="interviewDateTime" name="interviewDateTime" required class="form-control mb-2">
 
 
-                    <!-- Link phỏng vấn -->
                     <label for="interviewLink">Link phỏng vấn:</label>
                     <input type="text" id="interviewLink" name="interviewLink" placeholder="Link phỏng vấn" required class="form-control mb-2">
 
@@ -223,15 +219,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                    <!-- ID đơn ứng tuyển (ẩn) -->
                     <input type="hidden" name="applicationId" id="resultAppId">
 
-                    <!-- Ghi chú kết quả -->
                     <label for="resultNote">Ghi chú kết quả:</label>
                     <textarea id="resultNote" name="note" class="form-control mb-2" placeholder="Nhập ghi chú kết quả" required></textarea>
 
-                    <!-- Kết quả phỏng vấn -->
                     <label for="resultSelect">Kết quả phỏng vấn:</label>
                     <select id="resultSelect" name="result" class="form-select mb-2" required>
                         <option value="">-- Chọn kết quả --</option>

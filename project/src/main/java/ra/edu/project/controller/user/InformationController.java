@@ -35,7 +35,6 @@ public class InformationController {
     @Autowired
     private CandidateService candidateService;
 
-    // Hiển thị thông tin cá nhân
     @GetMapping
     public String information(Model model, HttpServletRequest request) {
         String username = userService.getCurrentUsername(request);

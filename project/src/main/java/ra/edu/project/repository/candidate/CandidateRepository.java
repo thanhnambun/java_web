@@ -24,17 +24,17 @@ public interface CandidateRepository {
 
     int changeStatus(int candidateId, Status status);
 
-    int getTotalCandidatesCount(); // Thêm để lấy tổng số ứng viên
+    int getTotalCandidatesCount();
 
-    int getTotalCandidatesByName(String name); // Thêm để lấy tổng số ứng viên theo tên
+    int getTotalCandidatesByName(String name);
 
-    int getTotalCandidatesByExperience(int experience); // Thêm để lấy tổng số ứng viên theo kinh nghiệm
+    int getTotalCandidatesByExperience(int experience);
 
-    int getTotalCandidatesByAge(int age); // Thêm để lấy tổng số ứng viên theo tuổi
+    int getTotalCandidatesByAge(int age);
 
-    int getTotalCandidatesByGender(String gender); // Thêm để lấy tổng số ứng viên theo giới tính
+    int getTotalCandidatesByGender(String gender);
 
-    int getTotalCandidatesByTechnology(String technology); // Thêm để lấy tổng số ứng viên theo công nghệ
+    int getTotalCandidatesByTechnology(String technology);
     void updateCandidate(Candidate candidate);
     Candidate getCandidateByUserId(int id );
     Candidate findByEmailAndPhone(String email, String phone);
